@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
 
-    <Button
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
+        android:layout_centerVertical="true"
+        android:background="#FFFFFF"
         android:onClick="loginToRest"
-        android:text="Log in with Twitter" />
-    
+        android:src="@drawable/connect_twitter_button" />
+
 </RelativeLayout>

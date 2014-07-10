@@ -26,7 +26,8 @@
 
         <activity
             android:name="com.example.disasternews.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.HighlightCopy" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,15 +50,13 @@
         </activity>
         <activity
             android:name="com.example.disasternews.SettingCountriesActivity"
-            android:label="@string/title_activity_setting_countries" >
-        </activity>
-        <activity
-            android:name="com.example.disasternews.SettingDisasterTypeActivity"
-            android:label="@string/title_activity_setting_disaster_type" >
+            android:label="@string/title_activity_setting_countries"
+            android:theme="@style/Theme.HighlightCopy" >
         </activity>
         <activity
             android:name="com.example.disasternews.SettingDisasterTypesActivity"
-            android:label="@string/title_activity_setting_disaster_types" >
+            android:label="@string/title_activity_setting_disaster_types"
+            android:theme="@style/Theme.HighlightCopy" >
         </activity>
     </application>
 

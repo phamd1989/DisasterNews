@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 	<item
         android:id="@+id/miFinish"
-        android:icon="@drawable/ic_action_next"
+        android:icon="@drawable/ic_action_finish"
         android:showAsAction="ifRoom"
         android:onClick="onFinish"
         android:title="Finish">

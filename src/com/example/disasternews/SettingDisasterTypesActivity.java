@@ -42,18 +42,25 @@ public class SettingDisasterTypesActivity extends FragmentActivity {
 	}
 	
 	public void onFinish(MenuItem mi) {
-		Intent i = new Intent(this, DisasterTimelineActivity.class);
-		List<String> result = new ArrayList<>();
-		result.addAll(countries);
-		// add space character to separate countries from disaster types
-		result.add(" ");
-		List<String> types = fragmentDisasterTypesSetting.getAdapter().getCountriesSelected();
-		result.addAll(types);
-		Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_SHORT).show();
-		
-		Bundle bundle = new Bundle();
-		bundle.putStringArrayList("countries_and_types", (ArrayList<String>) result);
-		i.putExtras(bundle);
-		startActivity(i);
+		if (mi.getItemId() == R.id.miFinish) {
+			if (fragmentDisasterTypesSetting.getSettings().size() == 0) {
+				Toast.makeText(getApplicationContext(), "Please check at least one box", Toast.LENGTH_SHORT).show();
+			} else {
+				List<String> result = new ArrayList<>();
+				result.addAll(countries);
+				// add space character to separate countries from disaster types
+				result.add(" ");
+				List<String> types = fragmentDisasterTypesSetting.getSettings();
+				result.addAll(types);
+				Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_SHORT).show();
+				
+				Intent i = new Intent(this, DisasterTimelineActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putStringArrayList("countries_and_types", (ArrayList<String>) result);
+				i.putExtras(bundle);
+				startActivity(i);
+
+			}
+		}
 	}
 }

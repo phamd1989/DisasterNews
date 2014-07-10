@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -35,20 +33,7 @@ public class SettingsArrayAdapter extends ArrayAdapter<String> {
 		// find the views in the xml layout
 		CheckBox cbSetting = (CheckBox) view.findViewById(R.id.cbSetting);
 		cbSetting.setText(setting);
-		cbSetting.setTag(setting);
 		
-		cbSetting.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				CheckBox cb = (CheckBox) v;
-				if (cb.isChecked()) {
-					settingsSelected.add(cb.getText().toString());
-				} else {
-					settingsSelected.remove(cb.getText().toString());
-				}
-				Log.d("Debug", settingsSelected.toString());
-			}
-		});
 		return view;
 	}
 	

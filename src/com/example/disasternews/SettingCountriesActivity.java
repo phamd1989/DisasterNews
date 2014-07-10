@@ -31,6 +31,7 @@ public class SettingCountriesActivity extends FragmentActivity {
 		return true;
 	}
 
+	
 	private void populateCountrySetting() {
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		fragmentCountrySetting = CountrySettingFragment.newInstance();
@@ -39,12 +40,17 @@ public class SettingCountriesActivity extends FragmentActivity {
 	}
 	
 	public void onNext(MenuItem mi) {
-		Toast.makeText(getApplicationContext(), fragmentCountrySetting.getAdapter().getCountriesSelected().toString(), Toast.LENGTH_SHORT).show();
-		
-		Intent i = new Intent(this, SettingDisasterTypesActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putStringArrayList("countries", (ArrayList<String>) fragmentCountrySetting.getAdapter().getCountriesSelected());
-		i.putExtras(bundle);
-		startActivity(i);
+		if (mi.getItemId() == R.id.miNext) {
+			// only move to the next activity if users select check at least on box
+			if (fragmentCountrySetting.getSettings().size() == 0) {
+				Toast.makeText(getApplicationContext(), "Please check at least one box", Toast.LENGTH_SHORT).show();
+			} else {
+				Intent i = new Intent(this, SettingDisasterTypesActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putStringArrayList("countries", (ArrayList<String>) fragmentCountrySetting.getSettings());
+				i.putExtras(bundle);
+				startActivity(i);
+			}
+		}
 	}
 }

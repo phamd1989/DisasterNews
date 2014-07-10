@@ -6,5 +6,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_disaster_timeline">DisasterTimelineActivity</string>
+    <string name="title_activity_setting_countries">SettingCountriesActivity</string>
+    <string name="title_activity_setting_disaster_type">SettingDisasterTypeActivity</string>
+    <string name="title_activity_setting_disaster_types">SettingDisasterTypesActivity</string>
 
 </resources>

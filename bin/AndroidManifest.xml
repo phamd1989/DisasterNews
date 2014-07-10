@@ -47,6 +47,18 @@
             android:name="com.example.disasternews.DisasterTimelineActivity"
             android:label="@string/title_activity_disaster_timeline" >
         </activity>
+        <activity
+            android:name="com.example.disasternews.SettingCountriesActivity"
+            android:label="@string/title_activity_setting_countries" >
+        </activity>
+        <activity
+            android:name="com.example.disasternews.SettingDisasterTypeActivity"
+            android:label="@string/title_activity_setting_disaster_type" >
+        </activity>
+        <activity
+            android:name="com.example.disasternews.SettingDisasterTypesActivity"
+            android:label="@string/title_activity_setting_disaster_types" >
+        </activity>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 public class SettingsArrayAdapter extends ArrayAdapter<String> {
 	
@@ -32,7 +33,8 @@ public class SettingsArrayAdapter extends ArrayAdapter<String> {
 		
 		// find the views in the xml layout
 		CheckBox cbSetting = (CheckBox) view.findViewById(R.id.cbSetting);
-		cbSetting.setText(setting);
+		TextView tvSetting = (TextView) view.findViewById(R.id.tvSetting);
+		tvSetting.setText(setting);
 		
 		return view;
 	}

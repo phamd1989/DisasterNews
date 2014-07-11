@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.disasternews.R;
 import com.example.disasternews.SettingsArrayAdapter;
@@ -37,14 +38,15 @@ public class BaseSettingFragment extends Fragment{
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				CheckBox cb = (CheckBox) view.findViewById(R.id.cbSetting);
+				TextView tv = (TextView) view.findViewById(R.id.tvSetting);
 				if (cb.isChecked()) {
 					// unchecking box
 					cb.setChecked(false);
-					settingsSelected.remove(cb.getText().toString());
+					settingsSelected.remove(tv.getText().toString());
 				} else {
 					// checking box
 					cb.setChecked(true);
-					settingsSelected.add(cb.getText().toString());
+					settingsSelected.add(tv.getText().toString());
 				}
 				Log.d("Debug", settingsSelected.toString());
 			}

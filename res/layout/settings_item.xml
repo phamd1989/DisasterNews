@@ -8,11 +8,21 @@
         android:id="@+id/cbSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#575757"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tvSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textColor="#575757"
+        android:layout_alignBaseline="@+id/cbSetting"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="CheckBox" />
+        android:textColor="#575757"
+        android:text="TextView" />
 
 </RelativeLayout>

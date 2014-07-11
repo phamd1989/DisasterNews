@@ -20,17 +20,19 @@ public final class R {
         public static final int sign_in_with_twitter=0x7f020006;
     }
     public static final class id {
-        public static final int action_settings=0x7f070009;
-        public static final int cbSetting=0x7f070006;
-        public static final int flCountries=0x7f070002;
-        public static final int flTypes=0x7f070004;
-        public static final int imageButton1=0x7f070000;
-        public static final int lvSettings=0x7f070005;
-        public static final int miFinish=0x7f070008;
-        public static final int miNext=0x7f07000a;
-        public static final int tvCountries=0x7f070001;
-        public static final int tvSetting=0x7f070007;
-        public static final int tvTypes=0x7f070003;
+        public static final int action_settings=0x7f07000b;
+        public static final int cbSetting=0x7f070008;
+        public static final int flCountries=0x7f070004;
+        public static final int flTypes=0x7f070006;
+        public static final int imageButton1=0x7f070002;
+        public static final int lvSettings=0x7f070007;
+        public static final int miFinish=0x7f07000a;
+        public static final int miNext=0x7f07000c;
+        public static final int pager_header=0x7f070001;
+        public static final int tvCountries=0x7f070003;
+        public static final int tvSetting=0x7f070009;
+        public static final int tvTypes=0x7f070005;
+        public static final int vpPager=0x7f070000;
     }
     public static final class layout {
         public static final int activity_disaster_timeline=0x7f030000;

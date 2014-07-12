@@ -41,7 +41,7 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
         vpPager.setAdapter(adapter);
         
         // Get the intent data
-        ArrayList<String> countriesAndTypes = getIntent().getStringArrayListExtra("countries_and_types");
+        ArrayList<String> countriesAndTypes = getIntent().getStringArrayListExtra("countries");
         ArrayList<String> countries = new ArrayList<String>();
         ArrayList<String> types = new ArrayList<String>();
         

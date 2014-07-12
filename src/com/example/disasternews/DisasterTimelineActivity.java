@@ -1,35 +1,198 @@
 package com.example.disasternews;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.ActionBar.Tab;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.example.disasternews.fragment.DisasterTimelineFragment;
-import com.example.disasternews.listener.FragmentTabListener;
+import com.example.disasternews.fragment.DisasterTimelineFragment.DisasterTimelineFragmentInterface;
+import com.example.disasternews.models.Disaster;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class DisasterTimelineActivity extends FragmentActivity {
+public class DisasterTimelineActivity extends FragmentActivity implements DisasterTimelineFragmentInterface{
 
     private static final int REQUEST_CODE = 10;
     private final String DISASTER_TAB_TAG = "disaster";
     
     DisasterTimelineFragment disasterTimelineFragment;
+    ReliefWebClient client;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_disaster_timeline);
 		
-		// setupTabs();
+		client = new ReliefWebClient();
 		
+		// setupTabs();
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         ContentPagerAdapter adapter = new ContentPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapter);
+        
+        // Get the intent data
+        ArrayList<String> countriesAndTypes = getIntent().getStringArrayListExtra("countries_and_types");
+        ArrayList<String> countries = new ArrayList<String>();
+        ArrayList<String> types = new ArrayList<String>();
+        
+        boolean fillCountry = true;
+        for ( String str : countriesAndTypes ) {
+            if ( str.equalsIgnoreCase(" ") ) {
+                fillCountry = false;
+                continue;
+            }
+            
+            if ( fillCountry ) {
+                Log.d("DEBUG", "adding " + str + " to countries");
+                countries.add(str);
+            }
+            else {
+                Log.d("DEBUG", "adding " + str + " to types");
+                types.add(str);
+            }
+        }
+        
+        client.getDisasters( countries, types, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject json) {
+                Log.d("DEBUG", json.toString());
+                
+                // create list of IDs
+                List<String> idList;
+                try {
+                    idList = new ArrayList<String>();
+                    JSONArray dataArray = json.getJSONArray("data");
+                    for ( int i=0; i < dataArray.length(); i++ ) {
+                        JSONObject item = null;
+                        try {
+                            item = dataArray.getJSONObject(i);
+                            String id = item.getString("id");
+                            // Log.d("DEBUG", "Adding id: " + id);
+                            idList.add(id);
+                        } catch ( Exception e ) {
+                            e.printStackTrace();
+                            continue;
+                        }
+                    }
+                    
+                } catch( JSONException e ) {
+                    e.printStackTrace();
+                    return;
+                }
+               
+                client.getDisasterMaps(idList, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(JSONObject json) {
+                        Log.d("DEBUG", json.toString());
+                        
+                        try {
+                            JSONArray dataArray = json.getJSONArray("data");
+                            if ( dataArray.length() > 0 ) {
+                                try {
+                                    JSONObject item = dataArray.getJSONObject(0);
+                                    String href = item.getString("href");
+                                    Log.d("DEBUG", "Getting href: " + href);
+                                    client.getDisasterDetails(href, new JsonHttpResponseHandler() {
+                                        public void onSuccess(JSONObject jsonDetail) {
+                                            try {
+                                                JSONArray detailsArray = jsonDetail.getJSONArray("data");
+                                                if ( detailsArray.length() > 0 ) {
+                                                    JSONObject fieldMapFirst = (JSONObject) detailsArray.get(0);
+                                                    Log.d("DEBUG", "fieldMapFirst: " + fieldMapFirst.toString());
+                                                    
+                                                    JSONObject fieldMapSecond = fieldMapFirst.getJSONObject("fields");
+                                                    Log.d("DEBUG", "fieldMapSecond: " + fieldMapSecond.toString() );
+                                                    
+                                                    JSONObject dateObject = fieldMapSecond.getJSONObject("date");
+                                                    JSONArray countryArray = fieldMapSecond.getJSONArray("country");
+                                                    JSONObject countryMap = (JSONObject) countryArray.get(0);
+                                                    JSONArray disasterArray = fieldMapSecond.getJSONArray("disaster");
+                                                    JSONObject disasterMap = (JSONObject) disasterArray.get(0);
+                                                    JSONArray disasterTypeArray = disasterMap.getJSONArray("type");
+                                                    JSONObject disasterTypeMap = (JSONObject) disasterTypeArray.get(0);
+                                                    JSONArray fileArray = fieldMapSecond.getJSONArray("file");
+                                                    JSONObject fileMap = (JSONObject) fileArray.get(0);
+                                                    JSONObject previewMap = fileMap.getJSONObject("preview");
+                                                    
+                                                    Disaster disaster = new Disaster( fieldMapSecond.getInt("id"),
+                                                                                      fieldMapSecond.getString("url"),
+                                                                                      disasterMap.getString("name"),
+                                                                                      fieldMapSecond.getString("body"),
+                                                                                      dateObject.getString("created"),
+                                                                                      countryMap.getString("name"),
+                                                                                      disasterTypeMap.getString("name"),
+                                                                                      previewMap.getString("url-large"),
+                                                                                      fieldMapSecond.getString("title")
+                                                            );
+                                                    disaster.save();
+                                                    Log.d("DEBUG", "disaster model: " + disaster.toString() );
+                                                }
+                                                
+                                            }
+                                            catch ( JSONException e ) {
+                                                e.printStackTrace();
+                                                return;
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Throwable e, String s) {
+                                            Log.d("ERROR", e.toString() );
+                                            Log.d("ERROR", s);
+                                        }
+                                        
+                                        @Override
+                                        protected void handleFailureMessage(Throwable e, String s) {
+                                            Log.d("ERROR", e.toString() );
+                                            Log.d("ERROR", s);
+                                        }
+                                    });
+                                } catch ( Exception e ) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } catch( JSONException e ) {
+                            e.printStackTrace();
+                            return;
+                        }
+                    }
+                    
+                    @Override
+                    public void onFailure(Throwable e, String s) {
+                        Log.d("ERROR", e.toString() );
+                        Log.d("ERROR", s);
+                    }
+                    
+                    @Override
+                    protected void handleFailureMessage(Throwable e, String s) {
+                        Log.d("ERROR", e.toString() );
+                        Log.d("ERROR", s);
+                    }
+                });
+            }
+            
+            @Override
+            public void onFailure(Throwable e, String s) {
+                Log.d("ERROR", e.toString() );
+                Log.d("ERROR", s);
+            }
+            
+            @Override
+            protected void handleFailureMessage(Throwable e, String s) {
+                Log.d("ERROR", e.toString() );
+                Log.d("ERROR", s);
+            }
+            
+        });
 	}
 	
 
@@ -71,17 +234,26 @@ public class DisasterTimelineActivity extends FragmentActivity {
                 return "Disaster News";
             }
             else {
-                return "Favorites";
+                return "My Collection";
             }
         }
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return new DisasterTimelineFragment();
-            }
+            Fragment result = null;
             
-            return new DisasterTimelineFragment();
+            
+            if (position == 0) {
+                disasterTimelineFragment = new DisasterTimelineFragment();
+                result = disasterTimelineFragment;
+            }
+            else {
+                // TODO
+                // MY collections
+                disasterTimelineFragment = new DisasterTimelineFragment();
+                result = disasterTimelineFragment;
+            }
+            return result;
         }
 
         @Override

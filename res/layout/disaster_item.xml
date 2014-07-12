@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- 
+        This layout goes inside the array adapter and is shown on the stream view.
+     -->
+
+    <ImageView
+        android:id="@+id/ivDisasterIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvStreamDisasterType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivDisasterIcon"
+        android:text="@string/stream_disaster_type" />
+
+    <TextView
+        android:id="@+id/tvStreamDisasterCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/stream_disaster_country" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvStreamDisasterType"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvStreamDisasterType"
+        android:text="@string/stream_disaster_description" />
+
+</RelativeLayout>

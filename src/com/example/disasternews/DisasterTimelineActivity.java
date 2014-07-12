@@ -104,6 +104,7 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
                                     Log.d("DEBUG", "Getting href: " + href);
                                     client.getDisasterDetails(href, new JsonHttpResponseHandler() {
                                         public void onSuccess(JSONObject jsonDetail) {
+                                            Integer id = 0;
                                             try {
                                                 JSONArray detailsArray = jsonDetail.getJSONArray("data");
                                                 if ( detailsArray.length() > 0 ) {
@@ -111,7 +112,23 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
                                                     Log.d("DEBUG", "fieldMapFirst: " + fieldMapFirst.toString());
                                                     
                                                     JSONObject fieldMapSecond = fieldMapFirst.getJSONObject("fields");
+                                                    id = fieldMapSecond.getInt("id");
                                                     Log.d("DEBUG", "fieldMapSecond: " + fieldMapSecond.toString() );
+                                                    
+                                                    // If contents do not have the "file" field, then it is useless.
+                                                    JSONArray fileArray = new JSONArray();
+                                                    JSONObject fileMap = new JSONObject();
+                                                    JSONObject previewMap = new JSONObject();
+                                                    if ( fieldMapSecond.has("file") ) {
+                                                        fileArray = fieldMapSecond.getJSONArray("file");
+                                                        fileMap = (JSONObject) fileArray.get(0);
+                                                        previewMap = fileMap.getJSONObject("preview");
+                                                    }
+                                                    else {
+                                                        Log.d("WARN", "ID: " + id.toString() 
+                                                                + " does not have file... SKIPPING. ");
+                                                        return;
+                                                    }
                                                     
                                                     JSONObject dateObject = fieldMapSecond.getJSONObject("date");
                                                     JSONArray countryArray = fieldMapSecond.getJSONArray("country");
@@ -120,14 +137,16 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
                                                     JSONObject disasterMap = (JSONObject) disasterArray.get(0);
                                                     JSONArray disasterTypeArray = disasterMap.getJSONArray("type");
                                                     JSONObject disasterTypeMap = (JSONObject) disasterTypeArray.get(0);
-                                                    JSONArray fileArray = fieldMapSecond.getJSONArray("file");
-                                                    JSONObject fileMap = (JSONObject) fileArray.get(0);
-                                                    JSONObject previewMap = fileMap.getJSONObject("preview");
                                                     
-                                                    Disaster disaster = new Disaster( fieldMapSecond.getInt("id"),
+                                                    String body = "";
+                                                    if ( fieldMapSecond.has("body") ) {
+                                                        body = fieldMapSecond.getString("body");
+                                                    }
+                                                    
+                                                    Disaster disaster = new Disaster( id,
                                                                                       fieldMapSecond.getString("url"),
                                                                                       disasterMap.getString("name"),
-                                                                                      fieldMapSecond.getString("body"),
+                                                                                      body,
                                                                                       dateObject.getString("created"),
                                                                                       countryMap.getString("name"),
                                                                                       disasterTypeMap.getString("name"),
@@ -140,7 +159,7 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
                                                 
                                             }
                                             catch ( JSONException e ) {
-                                                e.printStackTrace();
+                                                Log.d("DEBUG", "EXCEPTION id: " + id + " " + e.getMessage() );
                                                 return;
                                             }
                                         }

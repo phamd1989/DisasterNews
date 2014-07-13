@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
@@ -19,31 +20,30 @@ import com.example.disasternews.fragment.DisasterTimelineFragment;
 import com.example.disasternews.fragment.DisasterTimelineFragment.DisasterTimelineFragmentInterface;
 import com.example.disasternews.models.Disaster;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.example.disasternews.R;
 
 public class DisasterTimelineActivity extends FragmentActivity implements DisasterTimelineFragmentInterface{
 
     private static final int REQUEST_CODE = 10;
     private final String DISASTER_TAB_TAG = "disaster";
     
-    DisasterTimelineFragment disasterTimelineFragment;
+    DisasterTimelineFragment disasterTimelineFragment = null;
     ReliefWebClient client;
+    
+    ArrayList<String> countries;
+    ArrayList<String> types;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_disaster_timeline);
 		
-		client = new ReliefWebClient();
-		
-		// setupTabs();
-        ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
-        ContentPagerAdapter adapter = new ContentPagerAdapter(getSupportFragmentManager());
-        vpPager.setAdapter(adapter);
+		client = ReliefWebClient.getInstance();
         
         // Get the intent data
         ArrayList<String> countriesAndTypes = getIntent().getStringArrayListExtra("countries_and_types");
-        ArrayList<String> countries = new ArrayList<String>();
-        ArrayList<String> types = new ArrayList<String>();
+        countries = new ArrayList<String>();
+        types = new ArrayList<String>();
         
         boolean fillCountry = true;
         for ( String str : countriesAndTypes ) {
@@ -62,156 +62,11 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
             }
         }
         
-        client.getDisasters( countries, types, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(JSONObject json) {
-                Log.d("DEBUG", json.toString());
-                
-                // create list of IDs
-                List<String> idList;
-                try {
-                    idList = new ArrayList<String>();
-                    JSONArray dataArray = json.getJSONArray("data");
-                    for ( int i=0; i < dataArray.length(); i++ ) {
-                        JSONObject item = null;
-                        try {
-                            item = dataArray.getJSONObject(i);
-                            String id = item.getString("id");
-                            // Log.d("DEBUG", "Adding id: " + id);
-                            idList.add(id);
-                        } catch ( Exception e ) {
-                            e.printStackTrace();
-                            continue;
-                        }
-                    }
-                    
-                } catch( JSONException e ) {
-                    e.printStackTrace();
-                    return;
-                }
-               
-                client.getDisasterMaps(idList, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(JSONObject json) {
-                        Log.d("DEBUG", json.toString());
-                        
-                        try {
-                            JSONArray dataArray = json.getJSONArray("data");
-                            if ( dataArray.length() > 0 ) {
-                                try {
-                                    JSONObject item = dataArray.getJSONObject(0);
-                                    String href = item.getString("href");
-                                    Log.d("DEBUG", "Getting href: " + href);
-                                    client.getDisasterDetails(href, new JsonHttpResponseHandler() {
-                                        public void onSuccess(JSONObject jsonDetail) {
-                                            Integer id = 0;
-                                            try {
-                                                JSONArray detailsArray = jsonDetail.getJSONArray("data");
-                                                if ( detailsArray.length() > 0 ) {
-                                                    JSONObject fieldMapFirst = (JSONObject) detailsArray.get(0);
-                                                    Log.d("DEBUG", "fieldMapFirst: " + fieldMapFirst.toString());
-                                                    
-                                                    JSONObject fieldMapSecond = fieldMapFirst.getJSONObject("fields");
-                                                    id = fieldMapSecond.getInt("id");
-                                                    Log.d("DEBUG", "fieldMapSecond: " + fieldMapSecond.toString() );
-                                                    
-                                                    // If contents do not have the "file" field, then it is useless.
-                                                    JSONArray fileArray = new JSONArray();
-                                                    JSONObject fileMap = new JSONObject();
-                                                    JSONObject previewMap = new JSONObject();
-                                                    if ( fieldMapSecond.has("file") ) {
-                                                        fileArray = fieldMapSecond.getJSONArray("file");
-                                                        fileMap = (JSONObject) fileArray.get(0);
-                                                        previewMap = fileMap.getJSONObject("preview");
-                                                    }
-                                                    else {
-                                                        Log.d("WARN", "ID: " + id.toString() 
-                                                                + " does not have file... SKIPPING. ");
-                                                        return;
-                                                    }
-                                                    
-                                                    JSONObject dateObject = fieldMapSecond.getJSONObject("date");
-                                                    JSONArray countryArray = fieldMapSecond.getJSONArray("country");
-                                                    JSONObject countryMap = (JSONObject) countryArray.get(0);
-                                                    JSONArray disasterArray = fieldMapSecond.getJSONArray("disaster");
-                                                    JSONObject disasterMap = (JSONObject) disasterArray.get(0);
-                                                    JSONArray disasterTypeArray = disasterMap.getJSONArray("type");
-                                                    JSONObject disasterTypeMap = (JSONObject) disasterTypeArray.get(0);
-                                                    
-                                                    String body = "";
-                                                    if ( fieldMapSecond.has("body") ) {
-                                                        body = fieldMapSecond.getString("body");
-                                                    }
-                                                    
-                                                    Disaster disaster = new Disaster( id,
-                                                                                      fieldMapSecond.getString("url"),
-                                                                                      disasterMap.getString("name"),
-                                                                                      body,
-                                                                                      dateObject.getString("created"),
-                                                                                      countryMap.getString("name"),
-                                                                                      disasterTypeMap.getString("name"),
-                                                                                      previewMap.getString("url-large"),
-                                                                                      fieldMapSecond.getString("title")
-                                                            );
-                                                    disaster.save();
-                                                    Log.d("DEBUG", "disaster model: " + disaster.toString() );
-                                                }
-                                                
-                                            }
-                                            catch ( JSONException e ) {
-                                                Log.d("DEBUG", "EXCEPTION id: " + id + " " + e.getMessage() );
-                                                return;
-                                            }
-                                        }
-                                        @Override
-                                        public void onFailure(Throwable e, String s) {
-                                            Log.d("ERROR", e.toString() );
-                                            Log.d("ERROR", s);
-                                        }
-                                        
-                                        @Override
-                                        protected void handleFailureMessage(Throwable e, String s) {
-                                            Log.d("ERROR", e.toString() );
-                                            Log.d("ERROR", s);
-                                        }
-                                    });
-                                } catch ( Exception e ) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        } catch( JSONException e ) {
-                            e.printStackTrace();
-                            return;
-                        }
-                    }
-                    
-                    @Override
-                    public void onFailure(Throwable e, String s) {
-                        Log.d("ERROR", e.toString() );
-                        Log.d("ERROR", s);
-                    }
-                    
-                    @Override
-                    protected void handleFailureMessage(Throwable e, String s) {
-                        Log.d("ERROR", e.toString() );
-                        Log.d("ERROR", s);
-                    }
-                });
-            }
-            
-            @Override
-            public void onFailure(Throwable e, String s) {
-                Log.d("ERROR", e.toString() );
-                Log.d("ERROR", s);
-            }
-            
-            @Override
-            protected void handleFailureMessage(Throwable e, String s) {
-                Log.d("ERROR", e.toString() );
-                Log.d("ERROR", s);
-            }
-            
-        });
+        // setupTabs();
+        // IMPORTANT - create tabs after setting countries and types
+        ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
+        ContentPagerAdapter adapter = new ContentPagerAdapter(getSupportFragmentManager());
+        vpPager.setAdapter(adapter);
 	}
 	
 
@@ -263,13 +118,27 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
             
             
             if (position == 0) {
-                disasterTimelineFragment = new DisasterTimelineFragment();
+                
+                if ( disasterTimelineFragment == null ) {
+                    disasterTimelineFragment = DisasterTimelineFragment.newInstance();
+                    disasterTimelineFragment.setCountries(countries);
+                    disasterTimelineFragment.setTypes(types);
+                    /*
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    disasterTimelineFragment = DisasterTimelineFragment.newInstance();
+                    ft.replace(R.id.vpPager, disasterTimelineFragment);
+                    ft.commit();
+                    */
+                }
                 result = disasterTimelineFragment;
+
             }
             else {
                 // TODO
                 // MY collections
-                disasterTimelineFragment = new DisasterTimelineFragment();
+                //if ( disasterTimelineFragment == null ) {
+                    disasterTimelineFragment = DisasterTimelineFragment.newInstance();
+                //}
                 result = disasterTimelineFragment;
             }
             return result;
@@ -277,7 +146,7 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
 
         @Override
         public int getCount() {
-            return 2;
+            return 1;
         }
         
     }

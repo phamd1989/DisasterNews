@@ -47,14 +47,15 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
         ivDisasterIcon.setImageResource(android.R.color.transparent);
         ImageLoader imageLoader = ImageLoader.getInstance();
         
-        // TODO
         // load the icon based on type
-        // imageLoader.displayImage(uri, ivDisasterIcon);
+        imageLoader.displayImage(disaster.getImageUrl(), ivDisasterIcon);
         
         TextView tvType = (TextView) v.findViewById(R.id.tvStreamDisasterType);
         TextView tvCountry = (TextView) v.findViewById(R.id.tvStreamDisasterCountry);
+        TextView tvDescription = (TextView) v.findViewById(R.id.tvStreamDisasterName);
         tvType.setText(disaster.getType());
         tvCountry.setText(disaster.getCountry());
+        tvDescription.setText(disaster.getName());
         
         // Set image listener
         ivDisasterIcon.setOnClickListener(new OnClickListener() {

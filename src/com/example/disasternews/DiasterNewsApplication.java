@@ -33,6 +33,10 @@ public class DiasterNewsApplication extends com.activeandroid.app.Application {
 																DiasterNewsApplication.context);
 	}
 	
+	public static ReliefWebClient getReliefWebClient() {
+	    return ReliefWebClient.getInstance();
+	}
+	
 	@Override
     public void onTerminate() {
         super.onTerminate();

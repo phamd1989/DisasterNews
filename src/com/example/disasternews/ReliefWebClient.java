@@ -6,9 +6,11 @@ package com.example.disasternews;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -38,14 +40,26 @@ public class ReliefWebClient {
     private Long count = (long) 20;
     private Long offset = (long) 0;
     
+    private static ReliefWebClient instance = null;
+    
     AsyncHttpClient client = new AsyncHttpClient();
     
     /**
      * 
      */
-    public ReliefWebClient() {
+    private ReliefWebClient() {
     }
 
+    public static ReliefWebClient getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ReliefWebClient();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
+    }
     
     /**
      * API call to ReliefWeb to get disaster reports

@@ -32,12 +32,12 @@
         android:text="@string/stream_disaster_country" />
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvStreamDisasterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvStreamDisasterType"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tvStreamDisasterType"
-        android:text="@string/stream_disaster_description" />
+        android:text="@string/stream_disaster_name" />
 
 </RelativeLayout>

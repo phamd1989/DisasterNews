@@ -12,7 +12,7 @@
     <string name="title_activity_disaster_details">DisasterDetailsActivity</string>
     <string name="stream_disaster_type">type</string>
     <string name="stream_disaster_country">country</string>
-    <string name="stream_disaster_description">description</string>
+    <string name="stream_disaster_name">name</string>
     <string name="details_disaster_name">name</string>
     <string name="details_disaster_description">description</string>
     <string name="details_disaster_url">url</string>

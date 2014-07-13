@@ -93,6 +93,9 @@ public class DisasterTimelineFragment extends Fragment {
         aDisasters = new DisasterArrayAdapter(getActivity(), disasters);
         
         client = ReliefWebClient.getInstance();
+        
+        
+        
         populateTimeline();
     }
     
@@ -112,8 +115,7 @@ public class DisasterTimelineFragment extends Fragment {
             // Add whatever code is needed to append new items to your AdapterView
             @Override
             public void onLoadMore(int totalItemsCount) {
-                // populateTimeline();
-                
+                populateTimeline();
                 // disasterEndlessScrollListener.onLoadMore(totalItemsCount);
             }
         });
@@ -168,7 +170,7 @@ public class DisasterTimelineFragment extends Fragment {
                             continue;
                         }
                     }
-                    
+                    client.incOffset(idList.size());
                 } catch( JSONException e ) {
                     e.printStackTrace();
                     return;
@@ -222,6 +224,9 @@ public class DisasterTimelineFragment extends Fragment {
                                                     JSONArray disasterTypeArray = disasterMap.getJSONArray("type");
                                                     JSONObject disasterTypeMap = (JSONObject) disasterTypeArray.get(0);
                                                     
+                                                    String originalName = disasterMap.getString("name");
+                                                    String[] originalNameArray = originalName.split("-");
+                                                    
                                                     String body = "";
                                                     if ( fieldMapSecond.has("body") ) {
                                                         body = fieldMapSecond.getString("body");
@@ -229,7 +234,7 @@ public class DisasterTimelineFragment extends Fragment {
                                                     
                                                     Disaster disaster = new Disaster( id,
                                                                                       fieldMapSecond.getString("url"),
-                                                                                      disasterMap.getString("name"),
+                                                                                      originalNameArray[0],
                                                                                       body,
                                                                                       dateObject.getString("created"),
                                                                                       countryMap.getString("name"),

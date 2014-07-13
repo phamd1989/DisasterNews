@@ -35,9 +35,10 @@ public class ReliefWebClient {
             "&limit=%d";
     private String SORT_FIELD =
             "&sort[]=date:desc";
+    private String OFFSET_FIELD =
+            "&offset=%d";
     
     private Long limit = (long) 20;
-    private Long count = (long) 20;
     private Long offset = (long) 0;
     
     private static ReliefWebClient instance = null;
@@ -62,6 +63,14 @@ public class ReliefWebClient {
     }
     
     /**
+     * Our offset changed by the results returne from getDisasters call.
+     * @param increment
+     */
+    public void incOffset( Integer increment ) {
+        offset += increment;
+    }
+    
+    /**
      * API call to ReliefWeb to get disaster reports
      * @param countries 
      * 
@@ -82,6 +91,11 @@ public class ReliefWebClient {
         apiURL += param;
         apiURL += SORT_FIELD;
         
+        if ( offset > 0 ) {
+            param = String.format(OFFSET_FIELD, offset);
+            apiURL += param;
+        }
+        
         Log.d("DEBUG", "Making first call to " + apiURL );
         
         client.get(apiURL, handler);
@@ -94,8 +108,6 @@ public class ReliefWebClient {
      */
     public void getDisasterMaps( List<String> idList, AsyncHttpResponseHandler handler ) {
         String apiURL = "";
-        
-        java.util.Collections.sort(idList);
         
         for ( String id : idList ) {
             apiURL = String.format(DETAILS_URL, id);

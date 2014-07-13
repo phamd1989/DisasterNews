@@ -53,30 +53,36 @@ public final class R {
         public static final int sign_in_with_twitter=0x7f02001c;
     }
     public static final class id {
-        public static final int action_settings=0x7f080016;
+        public static final int action_settings=0x7f08001c;
         public static final int cbSetting=0x7f080014;
         public static final int container=0x7f080000;
         public static final int flCountries=0x7f080005;
         public static final int flTypes=0x7f080007;
         public static final int imageButton1=0x7f080003;
+        public static final int ivContentImage=0x7f08001b;
         public static final int ivDisasterIcon=0x7f080008;
         public static final int ivDisasterImage=0x7f08000d;
+        public static final int ivProfileImage=0x7f080016;
         public static final int lvDisasters=0x7f080012;
         public static final int lvSettings=0x7f080013;
-        public static final int miFinish=0x7f080017;
-        public static final int miNext=0x7f080018;
+        public static final int miFinish=0x7f08001d;
+        public static final int miNext=0x7f08001e;
         public static final int pager_header=0x7f080002;
+        public static final int tvBody=0x7f08001a;
         public static final int tvCountries=0x7f080004;
         public static final int tvDate=0x7f080011;
         public static final int tvDescription=0x7f08000f;
         public static final int tvName=0x7f08000e;
+        public static final int tvScreenName=0x7f080018;
         public static final int tvSetting=0x7f080015;
         public static final int tvStreamDisasterCountry=0x7f08000a;
         public static final int tvStreamDisasterDate=0x7f08000c;
         public static final int tvStreamDisasterName=0x7f08000b;
         public static final int tvStreamDisasterType=0x7f080009;
+        public static final int tvTimestamp=0x7f080019;
         public static final int tvTypes=0x7f080006;
         public static final int tvUrl=0x7f080010;
+        public static final int tvUserName=0x7f080017;
         public static final int vpPager=0x7f080001;
     }
     public static final class layout {
@@ -91,6 +97,7 @@ public final class R {
         public static final int fragment_disasters_list=0x7f030008;
         public static final int fragment_settings_list=0x7f030009;
         public static final int settings_item=0x7f03000a;
+        public static final int tweet_item=0x7f03000b;
     }
     public static final class menu {
         public static final int disaster_details=0x7f070000;

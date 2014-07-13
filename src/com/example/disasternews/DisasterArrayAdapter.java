@@ -77,13 +77,15 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
         TextView tvType = (TextView) v.findViewById(R.id.tvStreamDisasterType);
         TextView tvCountry = (TextView) v.findViewById(R.id.tvStreamDisasterCountry);
         TextView tvDescription = (TextView) v.findViewById(R.id.tvStreamDisasterName);
+        TextView tvDate = (TextView) v.findViewById(R.id.tvStreamDisasterDate);
+        
         String type = disaster.getType();
         tvType.setText(type);
         tvCountry.setText(disaster.getCountry());
         
-        String originalName = disaster.getName();
-        String[] originalNameArray = originalName.split("-");
-        tvDescription.setText( originalNameArray[0] );
+        tvDescription.setText( disaster.getName() );
+        
+        tvDate.setText( disaster.getDate() );
         
         // Find the views within template
         ImageView ivDisasterIcon = (ImageView) v.findViewById(R.id.ivDisasterIcon);

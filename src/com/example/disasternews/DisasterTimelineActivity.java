@@ -41,9 +41,15 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
 		client = ReliefWebClient.getInstance();
         
         // Get the intent data
+<<<<<<< HEAD
         ArrayList<String> countriesAndTypes = getIntent().getStringArrayListExtra("countries_and_types");
         countries = new ArrayList<String>();
         types = new ArrayList<String>();
+=======
+        ArrayList<String> countriesAndTypes = getIntent().getStringArrayListExtra("countries");
+        ArrayList<String> countries = new ArrayList<String>();
+        ArrayList<String> types = new ArrayList<String>();
+>>>>>>> 2f8df5f0e519dd8f5848595631158802e9b0ad4e
         
         boolean fillCountry = true;
         for ( String str : countriesAndTypes ) {

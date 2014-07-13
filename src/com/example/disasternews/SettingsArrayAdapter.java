@@ -35,7 +35,6 @@ public class SettingsArrayAdapter extends ArrayAdapter<String> {
 		CheckBox cbSetting = (CheckBox) view.findViewById(R.id.cbSetting);
 		TextView tvSetting = (TextView) view.findViewById(R.id.tvSetting);
 		tvSetting.setText(setting);
-		
 		return view;
 	}
 	

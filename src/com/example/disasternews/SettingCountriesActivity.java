@@ -27,7 +27,7 @@ public class SettingCountriesActivity extends FragmentActivity {
 	// Inflate the menu; this adds items to the action bar if it is present.
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.next, menu);
+		getMenuInflater().inflate(R.menu.finish, menu);
 		return true;
 	}
 
@@ -39,13 +39,13 @@ public class SettingCountriesActivity extends FragmentActivity {
 		ft.commit();
 	}
 	
-	public void onNext(MenuItem mi) {
-		if (mi.getItemId() == R.id.miNext) {
+	public void onFinish(MenuItem mi) {
+		if (mi.getItemId() == R.id.miFinish) {
 			// only move to the next activity if users select check at least on box
 			if (fragmentCountrySetting.getSettings().size() == 0) {
 				Toast.makeText(getApplicationContext(), "Please check at least one box", Toast.LENGTH_SHORT).show();
 			} else {
-				Intent i = new Intent(this, SettingDisasterTypesActivity.class);
+				Intent i = new Intent(this, DisasterTimelineActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putStringArrayList("countries", (ArrayList<String>) fragmentCountrySetting.getSettings());
 				i.putExtras(bundle);

@@ -63,12 +63,11 @@ public class ReliefWebClient {
     
     /**
      * API call to ReliefWeb to get disaster reports
-     * @param types 
      * @param countries 
      * 
      * @param handler
      */
-    public void getDisasters( ArrayList<String> countries, ArrayList<String> types, AsyncHttpResponseHandler handler ) {
+    public void getDisasters( ArrayList<String> countries, AsyncHttpResponseHandler handler ) {
         String apiURL = BASE_URL;
         Integer count = 0;
         String param;
@@ -78,14 +77,6 @@ public class ReliefWebClient {
             apiURL += param;
             count++;
         }
-        
-        /*
-        for ( String type : types ) {
-            param = String.format(CONDITION_TYPE, count, count, Uri.encode(type) );
-            apiURL += param;
-            count++;
-        }
-        */
         
         param = String.format(LIMIT_FIELD, limit);
         apiURL += param;
@@ -117,7 +108,7 @@ public class ReliefWebClient {
      * API call to get details such as maps and descriptions.
      */
     public void getDisasterDetails( String url, AsyncHttpResponseHandler handler ) {
-        Log.d("DEBUG", "Making 3rd call to " + url );
+        // Log.d("DEBUG", "Making 3rd call to " + url );
         client.get(url, handler);
     }
     

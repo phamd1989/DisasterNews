@@ -88,7 +88,6 @@ public class DisasterTimelineFragment extends Fragment {
         aDisasters = new DisasterArrayAdapter(getActivity(), disasters);
         
         client = ReliefWebClient.getInstance();
-        Log.d("DEBUG", "Disaster Timeline Fragment created here!!!!!!!!!!!!!!");
         populateTimeline();
     }
     
@@ -131,11 +130,9 @@ public class DisasterTimelineFragment extends Fragment {
      * 
      */
     public void populateTimeline() {
-        client.getDisasters( countries, types, new JsonHttpResponseHandler() {
+        client.getDisasters( countries, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject json) {
-                Log.d("DEBUG", json.toString());
-                
                 // create list of IDs
                 List<String> idList;
                 try {
@@ -162,15 +159,15 @@ public class DisasterTimelineFragment extends Fragment {
                 client.getDisasterMaps(idList, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(JSONObject json) {
-                        Log.d("DEBUG", json.toString());
-                        
                         try {
                             JSONArray dataArray = json.getJSONArray("data");
                             if ( dataArray.length() > 0 ) {
                                 try {
                                     JSONObject item = dataArray.getJSONObject(0);
                                     String href = item.getString("href");
-                                    Log.d("DEBUG", "Getting href: " + href);
+                                    
+                                    // Log.d("DEBUG", "Getting href: " + href);
+                                    
                                     client.getDisasterDetails(href, new JsonHttpResponseHandler() {
                                         public void onSuccess(JSONObject jsonDetail) {
                                             Integer id = 0;
@@ -178,11 +175,11 @@ public class DisasterTimelineFragment extends Fragment {
                                                 JSONArray detailsArray = jsonDetail.getJSONArray("data");
                                                 if ( detailsArray.length() > 0 ) {
                                                     JSONObject fieldMapFirst = (JSONObject) detailsArray.get(0);
-                                                    Log.d("DEBUG", "fieldMapFirst: " + fieldMapFirst.toString());
+                                                    // Log.d("DEBUG", "fieldMapFirst: " + fieldMapFirst.toString());
                                                     
                                                     JSONObject fieldMapSecond = fieldMapFirst.getJSONObject("fields");
                                                     id = fieldMapSecond.getInt("id");
-                                                    Log.d("DEBUG", "fieldMapSecond: " + fieldMapSecond.toString() );
+                                                    // Log.d("DEBUG", "fieldMapSecond: " + fieldMapSecond.toString() );
                                                     
                                                     // If contents do not have the "file" field, then it is useless.
                                                     JSONArray fileArray = new JSONArray();
@@ -224,7 +221,6 @@ public class DisasterTimelineFragment extends Fragment {
                                                             );
                                                     disaster.save();
                                                     aDisasters.add(disaster);
-                                                    Log.d("DEBUG", "disaster model: " + disaster.toString() );
                                                 }
                                                 
                                             }

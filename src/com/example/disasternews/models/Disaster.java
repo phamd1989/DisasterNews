@@ -1,8 +1,13 @@
 package com.example.disasternews.models;
 
+import java.util.List;
+
+import android.util.Log;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 @Table(name = "Disaster")
 public class Disaster extends Model {
@@ -26,7 +31,10 @@ public class Disaster extends Model {
     public String imageUrl;
     @Column(name = "title")
     public String title;
-    
+    @Column(name = "favorite")
+    public boolean favorite;
+
+
     /**
      * Default constructor for every ActiveAndroid model
      */
@@ -55,6 +63,7 @@ public class Disaster extends Model {
         this.type = type;
         this.imageUrl = imageUrl;
         this.title = title;
+        this.favorite = false;
     }
     
     
@@ -112,6 +121,43 @@ public class Disaster extends Model {
      */
     public String getImageUrl() {
         return imageUrl;
+    }
+    
+
+    /**
+     * @return the favorite
+     */
+    public boolean isFavorite() {
+        return favorite;
+    }
+    
+    /**
+     * @return the favorite
+     */
+    public boolean getFavorite() {
+        return favorite;
+    }
+
+    /**
+     * @param favorite the favorite to set
+     */
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    /**
+     * Method to return all the favorite disasters
+     * @return
+     */
+    public static List<Disaster> getFavoriteDisasters() {
+        List<Disaster> result = new Select()
+        .from(Disaster.class)
+        .where("favorite = 1")
+        .execute();
+        
+        Log.d("DEBUG", "Size of favorites: " + result.size());
+        
+        return result;
     }
     
 }

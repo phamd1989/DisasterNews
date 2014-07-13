@@ -16,18 +16,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import com.example.disasternews.fragment.BaseTimelineFragment;
 import com.example.disasternews.fragment.DisasterTimelineFragment;
-import com.example.disasternews.fragment.DisasterTimelineFragment.DisasterTimelineFragmentInterface;
+import com.example.disasternews.fragment.MyCollectionsTimelineFragment;
+import com.example.disasternews.fragment.BaseTimelineFragment.BecameVisible;
 import com.example.disasternews.models.Disaster;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.example.disasternews.R;
 
-public class DisasterTimelineActivity extends FragmentActivity implements DisasterTimelineFragmentInterface{
+public class DisasterTimelineActivity extends FragmentActivity {
 
     private static final int REQUEST_CODE = 10;
     private final String DISASTER_TAB_TAG = "disaster";
     
     DisasterTimelineFragment disasterTimelineFragment = null;
+    MyCollectionsTimelineFragment myCollectionsTimelineFragment = null;
     ReliefWebClient client;
     
     ArrayList<String> countries;
@@ -46,9 +49,30 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
         
         // setupTabs();
         // IMPORTANT - create tabs after setting countries and types
-        ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
-        ContentPagerAdapter adapter = new ContentPagerAdapter(getSupportFragmentManager());
+        final ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
+        final ContentPagerAdapter adapter = new ContentPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapter);
+        
+        // To be executed when we are switching between pages
+        vpPager.setOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int page) {
+                BaseTimelineFragment fragment = (BaseTimelineFragment) adapter.instantiateItem(vpPager, page);
+                if ( fragment != null && fragment instanceof MyCollectionsTimelineFragment ) {
+                    MyCollectionsTimelineFragment my = (MyCollectionsTimelineFragment) fragment;
+                    my.fragmentBecameVisible();
+                }
+            }
+            
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                
+            }
+            
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
 	}
 	
 
@@ -94,41 +118,36 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
             }
         }
 
+        /**
+         * This code is called only once for initialization.
+         * 
+         */
         @Override
         public Fragment getItem(int position) {
             Fragment result = null;
             
-            
             if (position == 0) {
-                
                 if ( disasterTimelineFragment == null ) {
                     disasterTimelineFragment = DisasterTimelineFragment.newInstance();
                     disasterTimelineFragment.setCountries(countries);
                     disasterTimelineFragment.setTypes(types);
-                    /*
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    disasterTimelineFragment = DisasterTimelineFragment.newInstance();
-                    ft.replace(R.id.vpPager, disasterTimelineFragment);
-                    ft.commit();
-                    */
                 }
                 result = disasterTimelineFragment;
 
             }
             else {
-                // TODO
-                // MY collections
-                //if ( disasterTimelineFragment == null ) {
-                    disasterTimelineFragment = DisasterTimelineFragment.newInstance();
-                //}
-                result = disasterTimelineFragment;
+                if ( myCollectionsTimelineFragment == null ) {
+                    myCollectionsTimelineFragment = MyCollectionsTimelineFragment.newInstance();
+                }
+                
+                result = myCollectionsTimelineFragment;
             }
             return result;
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
         
     }

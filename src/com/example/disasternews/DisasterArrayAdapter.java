@@ -8,15 +8,16 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.disasternews.models.Disaster;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -113,6 +114,16 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
                 // start activities if necessary
             }
             
+        });
+        
+        // Set the favorites button
+        ImageButton ib = (ImageButton) v.findViewById(R.id.tvStreamDisasterFavoriteButton);
+        ib.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disaster.setFavorite( !disaster.getFavorite() );
+                disaster.save();
+            }
         });
         
         return v;

@@ -9,92 +9,40 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-import com.example.disasternews.DisasterArrayAdapter;
 import com.example.disasternews.DisasterDetailsActivity;
 import com.example.disasternews.EndlessScrollListener;
 import com.example.disasternews.R;
-import com.example.disasternews.ReliefWebClient;
+import com.example.disasternews.fragment.BaseTimelineFragment.PopulateTimeline;
+import com.example.disasternews.fragment.BaseTimelineFragment.DisasterEndlessScrollListener;
 import com.example.disasternews.models.Disaster;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class DisasterTimelineFragment extends Fragment {
+public class DisasterTimelineFragment extends BaseTimelineFragment 
+    implements PopulateTimeline, DisasterEndlessScrollListener{
 
-    protected ArrayList<Disaster> disasters;
-    protected DisasterArrayAdapter aDisasters;
-    protected ListView lvDisasters;
-    protected DisasterEndlessScrollListener disasterEndlessScrollListener;
-    protected ReliefWebClient client;
-    
-    public static DisasterTimelineFragment dtf = null;
-    protected ArrayList<String> countries;
-    protected ArrayList<String> types;
-    
-    public interface DisasterTimelineFragmentInterface {
-        
+ 
+    public DisasterTimelineFragment() {
+        // EXPLANATION
+        // This fragment defines the populate() method which is called from
+        // listener
+        // However, the since this fragment is a child class and an implementation
+        // we set the endless scroll listener in this child class because it has the 
+        // definition for the actions needed by endless scrolling.
+        this.disasterEndlessScrollListener = this;
     }
-    
-    /**
-     * Activity must define this interface.
-     * In this Fragment, we're calling the method from this interface.
-     * 
-     * The TimelineActivity will implement this interface and allows the fragment
-     * to communicate events to the Activity.
-     *
-     */
-    public interface DisasterEndlessScrollListener {
-        public void onLoadMore( int totalItemsCount );
-    }
-    
-    /**
-     * @return the countries
-     */
-    public ArrayList<String> getCountries() {
-        return countries;
-    }
-
-    /**
-     * @param countries the countries to set
-     */
-    public void setCountries(ArrayList<String> countries) {
-        this.countries = countries;
-    }
-
-    /**
-     * @return the types
-     */
-    public ArrayList<String> getTypes() {
-        return types;
-    }
-
-    /**
-     * @param types the types to set
-     */
-    public void setTypes(ArrayList<String> types) {
-        this.types = types;
-    }
-
-    
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        disasters = new ArrayList<Disaster>();
-        aDisasters = new DisasterArrayAdapter(getActivity(), disasters);
-        
-        client = ReliefWebClient.getInstance();
-        
-        
         
         populateTimeline();
     }
@@ -115,40 +63,30 @@ public class DisasterTimelineFragment extends Fragment {
             // Add whatever code is needed to append new items to your AdapterView
             @Override
             public void onLoadMore(int totalItemsCount) {
-                populateTimeline();
-                // disasterEndlessScrollListener.onLoadMore(totalItemsCount);
+                disasterEndlessScrollListener.onLoadMore(totalItemsCount);
             }
         });
         
         lvDisasters.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Toast.makeText(getActivity(), disasters.get(position).getName(), Toast.LENGTH_LONG).show();
-				
-				Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
-				
-			}
-        	
-		});
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                Toast.makeText(getActivity(), disasters.get(position).getName(), Toast.LENGTH_LONG).show();
+                
+                Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
+                
+            }
+            
+        });
+        
         return v;
     }
     
-    
-    /**
-     * Delegate adding to the internal adapter
-     * 
-     * @param disasters
-     */
-    public void addAll( ArrayList<Disaster> disasters ) {
-        aDisasters.addAll(disasters);
-    }
-    
-    
     /**
      * 
      */
+    @Override
     public void populateTimeline() {
         client.getDisasters( countries, new JsonHttpResponseHandler() {
             @Override
@@ -303,11 +241,22 @@ public class DisasterTimelineFragment extends Fragment {
         });
     }
 
+    /**
+     * Method to create a new instance of this fragment
+     * 
+     * @return
+     */
     public static DisasterTimelineFragment newInstance() {
-        dtf = new DisasterTimelineFragment();
-        
-        return dtf;
+        return new DisasterTimelineFragment();
     }
-    
+
+
+    /**
+     * Implementing the interface defined in BaseTimelineFragment::DisasterEndlessScrollListener
+     */
+    @Override
+    public void onLoadMore(int totalItemsCount) {
+        populateTimeline();
+    }
     
 }

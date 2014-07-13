@@ -23,37 +23,60 @@ public final class R {
     }
     public static final class drawable {
         public static final int connect_twitter_button=0x7f020000;
-        public static final int disaster_news_app_icon=0x7f020001;
-        public static final int ic_action_finish=0x7f020002;
-        public static final int ic_action_next=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int ic_twitter_login=0x7f020005;
-        public static final int sign_in_with_twitter=0x7f020006;
+        public static final int disaster_cold_wave_100px_bluebox=0x7f020001;
+        public static final int disaster_cyclone_100px_bluebox=0x7f020002;
+        public static final int disaster_drought_100px_bluebox=0x7f020003;
+        public static final int disaster_earthquake_100px_bluebox=0x7f020004;
+        public static final int disaster_epidemic_100px_bluebox=0x7f020005;
+        public static final int disaster_fire_100px_bluebox=0x7f020006;
+        public static final int disaster_flash_flood_100px_bluebox=0x7f020007;
+        public static final int disaster_flood_100px_bluebox=0x7f020008;
+        public static final int disaster_heatwave_100px_bluebox=0x7f020009;
+        public static final int disaster_heavy_rain_100px_bluebox=0x7f02000a;
+        public static final int disaster_insect_infestation_100px_bluebox=0x7f02000b;
+        public static final int disaster_landslide_100px_bluebox=0x7f02000c;
+        public static final int disaster_locust_infestation_100px_bluebox=0x7f02000d;
+        public static final int disaster_news_app_icon=0x7f02000e;
+        public static final int disaster_snow_avalanche_100px_bluebox=0x7f02000f;
+        public static final int disaster_snowfall_100px_bluebox=0x7f020010;
+        public static final int disaster_storm_100px_bluebox=0x7f020011;
+        public static final int disaster_storm_surge_100px_bluebox=0x7f020012;
+        public static final int disaster_technological_100px_bluebox=0x7f020013;
+        public static final int disaster_tornado_100px_bluebox=0x7f020014;
+        public static final int disaster_tsunami_100px_bluebox=0x7f020015;
+        public static final int disaster_violent_wind_100px_bluebox=0x7f020016;
+        public static final int disaster_volcano_100px_bluebox=0x7f020017;
+        public static final int ic_action_finish=0x7f020018;
+        public static final int ic_action_next=0x7f020019;
+        public static final int ic_launcher=0x7f02001a;
+        public static final int ic_twitter_login=0x7f02001b;
+        public static final int sign_in_with_twitter=0x7f02001c;
     }
     public static final class id {
-        public static final int action_settings=0x7f080015;
-        public static final int cbSetting=0x7f080013;
+        public static final int action_settings=0x7f080016;
+        public static final int cbSetting=0x7f080014;
         public static final int container=0x7f080000;
         public static final int flCountries=0x7f080005;
         public static final int flTypes=0x7f080007;
         public static final int imageButton1=0x7f080003;
         public static final int ivDisasterIcon=0x7f080008;
-        public static final int ivDisasterImage=0x7f08000c;
-        public static final int lvDisasters=0x7f080011;
-        public static final int lvSettings=0x7f080012;
-        public static final int miFinish=0x7f080016;
-        public static final int miNext=0x7f080017;
+        public static final int ivDisasterImage=0x7f08000d;
+        public static final int lvDisasters=0x7f080012;
+        public static final int lvSettings=0x7f080013;
+        public static final int miFinish=0x7f080017;
+        public static final int miNext=0x7f080018;
         public static final int pager_header=0x7f080002;
         public static final int tvCountries=0x7f080004;
-        public static final int tvDate=0x7f080010;
-        public static final int tvDescription=0x7f08000e;
-        public static final int tvName=0x7f08000d;
-        public static final int tvSetting=0x7f080014;
+        public static final int tvDate=0x7f080011;
+        public static final int tvDescription=0x7f08000f;
+        public static final int tvName=0x7f08000e;
+        public static final int tvSetting=0x7f080015;
         public static final int tvStreamDisasterCountry=0x7f08000a;
+        public static final int tvStreamDisasterDate=0x7f08000c;
         public static final int tvStreamDisasterName=0x7f08000b;
         public static final int tvStreamDisasterType=0x7f080009;
         public static final int tvTypes=0x7f080006;
-        public static final int tvUrl=0x7f08000f;
+        public static final int tvUrl=0x7f080010;
         public static final int vpPager=0x7f080001;
     }
     public static final class layout {
@@ -85,6 +108,7 @@ public final class R {
         public static final int details_disaster_url=0x7f05000e;
         public static final int hello_world=0x7f050001;
         public static final int stream_disaster_country=0x7f05000a;
+        public static final int stream_disaster_date=0x7f050011;
         public static final int stream_disaster_name=0x7f05000b;
         public static final int stream_disaster_type=0x7f050009;
         public static final int title_activity_disaster_details=0x7f050008;

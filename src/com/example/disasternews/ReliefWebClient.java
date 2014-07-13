@@ -95,6 +95,8 @@ public class ReliefWebClient {
     public void getDisasterMaps( List<String> idList, AsyncHttpResponseHandler handler ) {
         String apiURL = "";
         
+        java.util.Collections.sort(idList);
+        
         for ( String id : idList ) {
             apiURL = String.format(DETAILS_URL, id);
             Log.d("DEBUG", "Making 2nd call to " + apiURL );

@@ -18,5 +18,6 @@
     <string name="details_disaster_url">url</string>
     <string name="details_disaster_date">date</string>
     <string name="details_disaster_picture">picture</string>
+    <string name="stream_disaster_date">date</string>
 
 </resources>

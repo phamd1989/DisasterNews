@@ -42,14 +42,7 @@ public class DisasterTimelineActivity extends FragmentActivity implements Disast
         
         // Get the intent data
         countries = getIntent().getStringArrayListExtra("countries");
-        // countries = new ArrayList<String>();
         
-        /*
-        for ( String str : countries ) {
-                Log.d("DEBUG", "adding " + str + " to countries");
-                countries.add(str);
-        }
-        */
         
         // setupTabs();
         // IMPORTANT - create tabs after setting countries and types

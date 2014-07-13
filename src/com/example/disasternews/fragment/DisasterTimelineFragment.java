@@ -7,15 +7,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.disasternews.DisasterArrayAdapter;
+import com.example.disasternews.DisasterDetailsActivity;
 import com.example.disasternews.EndlessScrollListener;
 import com.example.disasternews.R;
 import com.example.disasternews.ReliefWebClient;
@@ -112,6 +117,19 @@ public class DisasterTimelineFragment extends Fragment {
                 // disasterEndlessScrollListener.onLoadMore(totalItemsCount);
             }
         });
+        
+        lvDisasters.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Toast.makeText(getActivity(), disasters.get(position).getName(), Toast.LENGTH_LONG).show();
+				
+				Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
+				
+			}
+        	
+		});
         return v;
     }
     

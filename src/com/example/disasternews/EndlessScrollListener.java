@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.example.disasternews;
 
 import android.widget.AbsListView;

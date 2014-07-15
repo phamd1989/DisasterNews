@@ -4,8 +4,12 @@ import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class DisasterNewsClient extends OAuthBaseClient{
 	
@@ -17,6 +21,28 @@ public class DisasterNewsClient extends OAuthBaseClient{
 	
 	public DisasterNewsClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
+	}
+
+	public void getSearchEvents(String searchQuery, long maxTweetId,
+			AsyncHttpResponseHandler handler) {
+		
+		String apiUrl = getApiUrl("search/tweets.json"); 
+		RequestParams params = new RequestParams();
+//		if (searchQuery != null) {
+//			params.put("q", Uri.encode(searchQuery));
+//		}
+		if (maxTweetId != 0) {
+			params.put("max_id", Long.toString(maxTweetId));
+		}
+//		Log.d("debug", "searchQuery inside getUserTimeline: " + searchQuery);
+//		Log.d("debug", "maxTweetId inside getUserTimeline: " + Long.toString(maxTweetId));
+//		Log.d("debug", params.toString());
+//		if (searchQuery == null && maxTweetId == 0) {
+//			params = null;
+//		}
+		params.put("q", "vietnam");
+		Log.d("debug", params.toString());
+		client.get(apiUrl, params, handler);
 	}
 	
 }

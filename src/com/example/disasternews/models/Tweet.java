@@ -6,6 +6,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -71,6 +73,7 @@ public class Tweet extends Model{
 	}
 
 	public static ArrayList<Tweet> fromJsonArray(JSONArray json) {
+		Log.d("debug", "JSONResponse: " + json.toString());
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject tweetJson = null;

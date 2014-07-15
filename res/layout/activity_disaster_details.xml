@@ -1,7 +1,55 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.disasternews.DisasterDetailsActivity"
-    tools:ignore="MergeRootFrame" />
+    android:background="#ffffff"
+    tools:context="${packageName}.${activityClass}" >
+
+	<FrameLayout
+       android:id="@+id/flRelatedTweets"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnWebView" >
+  	</FrameLayout>
+
+	<ImageView
+	    android:id="@+id/ivMap"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:layout_alignParentRight="true"
+	    android:src="@drawable/sign_in_with_twitter" />
+
+	<Button
+	    android:id="@+id/btnWebView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/tvTitle"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="5dp"
+	    android:text="View on the web" />
+
+	<TextView
+	    android:id="@+id/tvTimestamp"
+	    android:layout_alignParentLeft="true"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/ivMap"
+	    android:text="Small Text"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+	    android:id="@+id/tvTitle"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/tvTimestamp"
+	    android:layout_marginTop="5dp"
+	    android:text="Large Text"
+	    android:textAppearance="?android:attr/textAppearanceLarge" />
+  	
+</RelativeLayout>

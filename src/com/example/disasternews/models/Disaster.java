@@ -160,4 +160,8 @@ public class Disaster extends Model {
         return result;
     }
     
+    public static Disaster getDisasterInfo(int dId) {
+		return (Disaster) new Select().from(Disaster.class).where("disasterId = ?", dId).executeSingle();
+	}
+    
 }

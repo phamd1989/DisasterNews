@@ -69,17 +69,18 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
         
         lvDisasters.setOnItemClickListener(new OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
-                Toast.makeText(getActivity(), disasters.get(position).getName(), Toast.LENGTH_LONG).show();
-                
-                Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
-                
-            }
-            
-        });
-        
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
+				int disasterId = disasters.get(position).getDisasterId();
+				String disasterName = disasters.get(position).getName();
+				i.putExtra("disasterId", disasterId);
+				i.putExtra("disasterName", disasterName);
+				startActivity(i);
+			}
+        	
+		});
         return v;
     }
     

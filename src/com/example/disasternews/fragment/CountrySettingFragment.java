@@ -16,6 +16,8 @@ public class CountrySettingFragment extends BaseSettingFragment{
 		countries.add("Vietnam");
 		countries.add("Malaysia");
 		countries.add("UK");
+		countries.add("Philippines");
+		countries.add("South Sudan");
 		adapter = new SettingsArrayAdapter(getActivity(), countries);
 	}
 

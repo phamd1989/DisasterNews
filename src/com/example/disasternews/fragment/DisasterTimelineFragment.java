@@ -44,7 +44,7 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        populateTimeline();
+        populateTimeline( true );
     }
     
     @Override
@@ -88,8 +88,8 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
      * 
      */
     @Override
-    public void populateTimeline() {
-        client.getDisasters( countries, new JsonHttpResponseHandler() {
+    public void populateTimeline( boolean newSettings ) {
+        client.getDisasters( newSettings, countries, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject json) {
                 // create list of IDs
@@ -257,7 +257,7 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void onLoadMore(int totalItemsCount) {
-        populateTimeline();
+        populateTimeline( false );
     }
     
 }

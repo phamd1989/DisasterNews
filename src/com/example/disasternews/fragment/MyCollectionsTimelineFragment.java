@@ -45,7 +45,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        populateTimeline();
+        populateTimeline( false );
     }
     
     @Override
@@ -104,7 +104,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
      * Populate the timeline with favorite disasters
      */
     @Override
-    public void populateTimeline() {
+    public void populateTimeline( boolean newSettings ) {
         aDisasters.clear();
         List<Disaster> favoriteDisasters = Disaster.getFavoriteDisasters();
         addAll( new ArrayList<Disaster>(favoriteDisasters) );
@@ -115,7 +115,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void onLoadMore(int totalItemsCount) {
-        populateTimeline();
+        populateTimeline( false );
     }
 
     /**
@@ -124,7 +124,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void fragmentBecameVisible() {
-        populateTimeline();
+        populateTimeline( false );
     }
     
 }

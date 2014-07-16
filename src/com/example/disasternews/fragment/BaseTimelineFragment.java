@@ -32,7 +32,7 @@ public abstract class BaseTimelineFragment extends Fragment {
     protected DisasterArrayAdapter aDisasters;
     protected ListView lvDisasters;
     protected DisasterEndlessScrollListener disasterEndlessScrollListener;
-    protected ReliefWebClient client;
+    protected ReliefWebClient client = null;
     
     public static BaseTimelineFragment btf = null;
     protected ArrayList<String> countries;
@@ -50,7 +50,7 @@ public abstract class BaseTimelineFragment extends Fragment {
      *
      */
     public interface PopulateTimeline {
-        public void populateTimeline();
+        public void populateTimeline( boolean newSettings );
     }
     
     /**
@@ -84,6 +84,9 @@ public abstract class BaseTimelineFragment extends Fragment {
      * @param countries the countries to set
      */
     public void setCountries(ArrayList<String> countries) {
+        if ( client != null ) {
+            client.setOffset( (long) 0 );
+        }
         this.countries = countries;
     }
 

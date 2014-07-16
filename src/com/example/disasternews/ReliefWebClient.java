@@ -71,16 +71,27 @@ public class ReliefWebClient {
     }
     
     /**
+     * 
+     * @param offset
+     */
+    public void setOffset( Long offset ) {
+        this.offset = offset;
+    }
+    
+    /**
      * API call to ReliefWeb to get disaster reports
      * @param countries 
      * 
      * @param handler
      */
-    public void getDisasters( ArrayList<String> countries, AsyncHttpResponseHandler handler ) {
+    public void getDisasters( boolean newSettings, ArrayList<String> countries, AsyncHttpResponseHandler handler ) {
         String apiURL = BASE_URL;
         Integer count = 0;
         String param;
-        offset = (long) 0;
+        
+        if ( newSettings ) {
+            offset = (long) 0;
+        }
         
         for ( String country : countries ) {
             param = String.format(CONDITION_COUNTRY, count, count, Uri.encode(country) );
@@ -112,7 +123,7 @@ public class ReliefWebClient {
         
         for ( String id : idList ) {
             apiURL = String.format(DETAILS_URL, id);
-            Log.d("DEBUG", "Making 2nd call to " + apiURL );
+            // Log.d("DEBUG", "Making 2nd call to " + apiURL );
             client.get(apiURL, handler);
         }
         

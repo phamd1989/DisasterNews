@@ -1,7 +1,11 @@
 package com.example.disasternews.models;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.activeandroid.Model;
@@ -12,7 +16,10 @@ import com.activeandroid.query.Select;
 @Table(name = "Disaster")
 public class Disaster extends Model {
 
+    // public static final String DISASTER_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+    public static final String DISASTER_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
+    
     @Column(name = "disasterId")
     public int disasterId;
     @Column(name = "url")
@@ -33,6 +40,9 @@ public class Disaster extends Model {
     public String title;
     @Column(name = "favorite")
     public boolean favorite;
+    @Column(name = "relativeTime")
+    public String relativeTime;
+
 
 
     /**
@@ -64,6 +74,7 @@ public class Disaster extends Model {
         this.imageUrl = imageUrl;
         this.title = title;
         this.favorite = false;
+        this.relativeTime = this.getRelativeTimeAgo(date);
     }
     
     
@@ -146,6 +157,13 @@ public class Disaster extends Model {
     }
 
     /**
+     * @return the relativeTime
+     */
+    public String getRelativeTime() {
+        return relativeTime;
+    }
+    
+    /**
      * Method to return all the favorite disasters
      * @return
      */
@@ -163,5 +181,29 @@ public class Disaster extends Model {
     public static Disaster getDisasterInfo(int dId) {
 		return (Disaster) new Select().from(Disaster.class).where("disasterId = ?", dId).executeSingle();
 	}
+    
+    /**
+     * Method to parse the created_at field from twitter.
+     * 
+     * getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
+     * 
+     * @param rawJsonDate
+     * @return relativeDate of the tweet
+     */
+    public String getRelativeTimeAgo(String rawJsonDate) {
+        SimpleDateFormat sf = new SimpleDateFormat(DISASTER_FORMAT, Locale.ENGLISH);
+        sf.setLenient(true);
+     
+        String relativeDate = "";
+        try {
+            long dateMillis = sf.parse(rawJsonDate).getTime();
+            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+     
+        return relativeDate;
+    }
     
 }

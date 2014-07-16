@@ -86,7 +86,8 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
         
         tvDescription.setText( disaster.getName() );
         
-        tvDate.setText( disaster.getDate() );
+        //tvDate.setText( disaster.getDate() );
+        tvDate.setText( disaster.getRelativeTime());
         
         // Find the views within template
         ImageView ivDisasterIcon = (ImageView) v.findViewById(R.id.ivDisasterIcon);

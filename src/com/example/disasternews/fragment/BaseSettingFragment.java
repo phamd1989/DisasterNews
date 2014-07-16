@@ -47,12 +47,22 @@ public class BaseSettingFragment extends Fragment{
 					if (cb.isChecked()) {
 						// uncheck
 						cb.setChecked(false);
+						int size = lvCountries.getAdapter().getCount();
+						for (int i=1; i<size; i++) {
+							View v = lvCountries.getChildAt(i);
+							CheckBox cbi = (CheckBox) v.findViewById(R.id.cbSetting);
+							cbi.setChecked(false);
+						}
 					} else {
 						cb.setChecked(true);
 						// check all countries here
+						
 						int size = lvCountries.getAdapter().getCount();
 						for (int i=1; i<size; i++) {
 							settingsSelected.add(lvCountries.getAdapter().getItem(i).toString());
+							View v = lvCountries.getChildAt(i);
+							CheckBox cbi = (CheckBox) v.findViewById(R.id.cbSetting);
+							cbi.setChecked(true);
 						}
 					}
 				} else {
@@ -60,6 +70,11 @@ public class BaseSettingFragment extends Fragment{
 					if (cb.isChecked()) {
 						// unchecking box
 						cb.setChecked(false);
+						View v = lvCountries.getChildAt(0);
+						CheckBox cb0 = (CheckBox) v.findViewById(R.id.cbSetting);
+						if (cb0.isChecked()) {
+							cb0.setChecked(false);
+						}
 						// consider doing refactor here: modifying the adapter's inner list
 						settingsSelected.remove(tv.getText().toString());
 					} else {

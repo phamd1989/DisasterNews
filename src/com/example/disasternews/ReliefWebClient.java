@@ -80,6 +80,7 @@ public class ReliefWebClient {
         String apiURL = BASE_URL;
         Integer count = 0;
         String param;
+        offset = (long) 0;
         
         for ( String country : countries ) {
             param = String.format(CONDITION_COUNTRY, count, count, Uri.encode(country) );

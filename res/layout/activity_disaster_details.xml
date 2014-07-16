@@ -51,5 +51,5 @@
 	    android:layout_marginTop="5dp"
 	    android:text="Large Text"
 	    android:textAppearance="?android:attr/textAppearanceLarge" />
-  	
+
 </RelativeLayout>

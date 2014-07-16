@@ -40,7 +40,7 @@ public class DisasterNewsClient extends OAuthBaseClient{
 //		if (searchQuery == null && maxTweetId == 0) {
 //			params = null;
 //		}
-		params.put("q", "vietnam");
+		params.put("q", searchQuery);
 		Log.d("debug", params.toString());
 		client.get(apiUrl, params, handler);
 	}

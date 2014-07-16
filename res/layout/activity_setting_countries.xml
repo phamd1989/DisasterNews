@@ -9,10 +9,11 @@
         android:id="@+id/tvCountries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textColor="#575757"
-        android:text="Please select countries: "
+        android:text="Select countries: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <FrameLayout
@@ -25,5 +26,7 @@
         android:layout_alignParentRight="true" >
 
     </FrameLayout>
+
+    
 
 </RelativeLayout>

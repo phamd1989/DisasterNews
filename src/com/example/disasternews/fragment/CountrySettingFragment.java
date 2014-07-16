@@ -12,6 +12,7 @@ public class CountrySettingFragment extends BaseSettingFragment{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		List<String> countries = new ArrayList<>();
+		countries.add("Select All");
 		countries.add("USA");
 		countries.add("Vietnam");
 		countries.add("Malaysia");

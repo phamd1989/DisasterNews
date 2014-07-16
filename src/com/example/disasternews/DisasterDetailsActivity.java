@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,14 +31,27 @@ public class DisasterDetailsActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
         setContentView(R.layout.activity_disaster_details);
-
+        
+        // loading progress
+        showProgressBar();
+        // run background task
         disasterName = getIntent().getStringExtra("disasterName");
         dId = getIntent().getIntExtra("disasterId", 0);
         loadDisasterDetails(dId);
         loadTweetsRelated();
     }
     
+    // Should be called manually when an async task has started
+    public void showProgressBar() {
+        setProgressBarIndeterminateVisibility(true); 
+    }
+    
+    // Should be called when an async task has finished
+    public void hideProgressBar() {
+    	setProgressBarIndeterminateVisibility(false); 
+    }
 
     private void loadDisasterDetails(int disasterId) {
 		ivMap = (ImageView) findViewById(R.id.ivMap);

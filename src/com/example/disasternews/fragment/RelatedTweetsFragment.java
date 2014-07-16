@@ -38,6 +38,8 @@ public class RelatedTweetsFragment extends TweetsListFragment{
 			public void onSuccess(JSONObject jsonObj) {
 				try {
 					Log.d(jsonObj.toString());
+					// stop the progress bar 
+					getActivity().setProgressBarIndeterminateVisibility(false);
 					JSONArray statuses = jsonObj.getJSONArray("statuses");
 					addAll(Tweet.fromJsonArray(statuses));
 				} catch (JSONException e) {

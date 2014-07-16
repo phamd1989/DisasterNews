@@ -9,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.disasternews.R;
 import com.example.disasternews.SettingsArrayAdapter;
@@ -39,18 +41,37 @@ public class BaseSettingFragment extends Fragment{
 					int position, long id) {
 				CheckBox cb = (CheckBox) view.findViewById(R.id.cbSetting);
 				TextView tv = (TextView) view.findViewById(R.id.tvSetting);
-				if (cb.isChecked()) {
-					// unchecking box
-					cb.setChecked(false);
-					settingsSelected.remove(tv.getText().toString());
+				
+				if (position == 0) {
+					settingsSelected.clear();
+					if (cb.isChecked()) {
+						// uncheck
+						cb.setChecked(false);
+					} else {
+						cb.setChecked(true);
+						// check all countries here
+						int size = lvCountries.getAdapter().getCount();
+						for (int i=1; i<size; i++) {
+							settingsSelected.add(lvCountries.getAdapter().getItem(i).toString());
+						}
+					}
 				} else {
-					// checking box
-					cb.setChecked(true);
-					settingsSelected.add(tv.getText().toString());
+					// check some countries here
+					if (cb.isChecked()) {
+						// unchecking box
+						cb.setChecked(false);
+						// consider doing refactor here: modifying the adapter's inner list
+						settingsSelected.remove(tv.getText().toString());
+					} else {
+						// checking box
+						cb.setChecked(true);
+						settingsSelected.add(tv.getText().toString());
+					}
 				}
 				Log.d("Debug", settingsSelected.toString());
 			}
 		});
+		
 		return v;
 	}
 

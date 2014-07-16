@@ -63,7 +63,7 @@ public class DisasterDetailsActivity extends FragmentActivity {
     	ivMap.setImageResource(android.R.color.transparent);
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		imageLoader.displayImage(disaster.getImageUrl(), ivMap);
-		tvTimestamp.setText(disaster.getDate());
+		tvTimestamp.setText(disaster.getRelativeTime());
 		tvTitle.setText(disaster.getName());
 		btnWebView.setOnClickListener(new OnClickListener() {
 			

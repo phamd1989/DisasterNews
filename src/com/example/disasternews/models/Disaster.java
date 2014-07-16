@@ -42,7 +42,8 @@ public class Disaster extends Model {
     public boolean favorite;
     @Column(name = "relativeTime")
     public String relativeTime;
-
+    @Column(name = "epochTime")
+    public Long epochTime;
 
 
     /**
@@ -162,6 +163,20 @@ public class Disaster extends Model {
     public String getRelativeTime() {
         return relativeTime;
     }
+
+    /**
+     * @return the epochTime
+     */
+    public Long getEpochTime() {
+        return epochTime;
+    }
+
+    /**
+     * @param epochTime the epochTime to set
+     */
+    public void setEpochTime(Long epochTime) {
+        this.epochTime = epochTime;
+    }
     
     /**
      * Method to return all the favorite disasters
@@ -197,6 +212,8 @@ public class Disaster extends Model {
         String relativeDate = "";
         try {
             long dateMillis = sf.parse(rawJsonDate).getTime();
+            this.epochTime = dateMillis;
+            
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
         } catch (ParseException e) {

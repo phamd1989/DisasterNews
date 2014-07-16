@@ -1,6 +1,7 @@
 package com.example.disasternews.fragment;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -239,6 +240,34 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
                 Log.d("ERROR", s);
             }
             
+        });
+        
+        aDisasters.sort( new Comparator<Disaster>() {
+
+            @Override
+            public int compare(Disaster lhs, Disaster rhs) {
+                Long lTime = lhs.getEpochTime();
+                Long rTime = rhs.getEpochTime();
+                
+                if ( lTime == null && rTime == null ) {
+                    return 0;
+                }
+                if ( lTime == null ) {
+                    return 1;
+                }
+                if ( rTime == null ) {
+                    return -1;
+                }
+
+                if ( lTime < rTime ) {
+                    return 1;
+                }
+                if ( lTime > rTime ) {
+                    return -1;
+                }
+                
+                return 0;
+            }
         });
     }
 

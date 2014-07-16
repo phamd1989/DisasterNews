@@ -44,6 +44,7 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
         nameIconMap.put("Flash Flood", R.drawable.disaster_flash_flood_100px_bluebox);
         nameIconMap.put("Flood", R.drawable.disaster_flood_100px_bluebox);
         nameIconMap.put("Heatwave", R.drawable.disaster_heatwave_100px_bluebox);
+        nameIconMap.put("Heat Wave", R.drawable.disaster_heatwave_100px_bluebox);
         nameIconMap.put("Heavy Rain", R.drawable.disaster_heavy_rain_100px_bluebox);
         nameIconMap.put("Insect Infestation", R.drawable.disaster_insect_infestation_100px_bluebox);
         nameIconMap.put("Landslide", R.drawable.disaster_landslide_100px_bluebox);
@@ -52,8 +53,10 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
         nameIconMap.put("Snow Avalanche", R.drawable.disaster_snow_avalanche_100px_bluebox);
         nameIconMap.put("Snowfall", R.drawable.disaster_snowfall_100px_bluebox);
         nameIconMap.put("Storm", R.drawable.disaster_storm_100px_bluebox);
+        nameIconMap.put("Severe Local Storm", R.drawable.disaster_storm_100px_bluebox);
         nameIconMap.put("Storm Surge", R.drawable.disaster_storm_surge_100px_bluebox);
         nameIconMap.put("Technological", R.drawable.disaster_technological_100px_bluebox);
+        nameIconMap.put("Tech. Disaster", R.drawable.disaster_technological_100px_bluebox);
         nameIconMap.put("Tornado", R.drawable.disaster_tornado_100px_bluebox);
         nameIconMap.put("Tsunami", R.drawable.disaster_tsunami_100px_bluebox);
         nameIconMap.put("Violent Wind", R.drawable.disaster_violent_wind_100px_bluebox);

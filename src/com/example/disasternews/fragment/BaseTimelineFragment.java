@@ -45,6 +45,43 @@ public abstract class BaseTimelineFragment extends Fragment {
     public BaseTimelineFragment() {
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        // return super.onCreateView(inflater, container, savedInstanceState);
+        
+        View v = inflater.inflate(R.layout.fragment_disasters_list, container, false);
+        
+        // Assign our view references
+        lvDisasters = (ListView) v.findViewById( R.id.lvDisasters );
+        lvDisasters.setAdapter(aDisasters);
+        
+        lvDisasters.setOnScrollListener( new EndlessScrollListener() {
+            // Triggered only when new data needs to be appended to the list
+            // Add whatever code is needed to append new items to your AdapterView
+            @Override
+            public void onLoadMore(int totalItemsCount) {
+                disasterEndlessScrollListener.onLoadMore(totalItemsCount);
+            }
+        });
+        
+        lvDisasters.setOnItemClickListener(new OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
+                int disasterId = disasters.get(position).getDisasterId();
+                String disasterName = disasters.get(position).getName();
+                i.putExtra("disasterId", disasterId);
+                i.putExtra("disasterName", disasterName);
+                startActivity(i);
+            }
+            
+        });
+        return v;
+    }
+    
     /**
      * All fragments must implement this timeline method
      *

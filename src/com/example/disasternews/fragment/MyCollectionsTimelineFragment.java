@@ -51,23 +51,14 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        // return super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         
-        View v = inflater.inflate(R.layout.fragment_mycollections_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_disasters_list, container, false);
         
         // Assign our view references
-        lvDisasters = (ListView) v.findViewById( R.id.lvMyCollection );
+        lvDisasters = (ListView) v.findViewById( R.id.lvDisasters );
         lvDisasters.setAdapter(aDisasters);
-        
-        lvDisasters.setOnScrollListener( new EndlessScrollListener() {
-            // Triggered only when new data needs to be appended to the list
-            // Add whatever code is needed to append new items to your AdapterView
-            @Override
-            public void onLoadMore(int totalItemsCount) {
-                disasterEndlessScrollListener.onLoadMore(totalItemsCount);
-            }
-        });
-        
+                
         lvDisasters.setOnItemLongClickListener( new OnItemLongClickListener() {
 
             @Override

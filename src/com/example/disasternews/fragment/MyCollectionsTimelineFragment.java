@@ -48,6 +48,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
         populateTimeline( false );
     }
     
+    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
         
         return v;
     }
+    */
     
     /**
      * Method to create a new instance of this fragment

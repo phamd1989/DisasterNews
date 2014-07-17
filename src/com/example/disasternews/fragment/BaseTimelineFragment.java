@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -78,6 +79,25 @@ public abstract class BaseTimelineFragment extends Fragment {
                 startActivity(i);
             }
             
+        });
+        
+        
+        lvDisasters.setOnItemLongClickListener( new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                // Toast.makeText(getActivity(), disasters.get(position).getName(), Toast.LENGTH_LONG).show();
+                
+                // Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
+                
+                Disaster disaster = disasters.get(position);
+                disaster.setFavorite(! disaster.getFavorite() );
+                disaster.save();
+                
+                disasters.remove(position);
+                aDisasters.notifyDataSetChanged();
+                return false;
+            }
         });
         return v;
     }

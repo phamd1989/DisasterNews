@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Choreographer.FrameCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,10 @@ import com.example.disasternews.fragment.BaseTimelineFragment.PopulateTimeline;
 import com.example.disasternews.fragment.BaseTimelineFragment.DisasterEndlessScrollListener;
 import com.example.disasternews.models.Disaster;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.example.disasternews.fragment.BaseTimelineFragment.BecameVisible;
 
 public class DisasterTimelineFragment extends BaseTimelineFragment 
-    implements PopulateTimeline, DisasterEndlessScrollListener{
+    implements PopulateTimeline, DisasterEndlessScrollListener, BecameVisible{
 
  
     public DisasterTimelineFragment() {
@@ -253,4 +255,15 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
         populateTimeline( false );
     }
     
+    
+    /**
+     * Interface method to be called the the page is selected.
+     * Pager in DisasterTimelineActivity shall call this.
+     */
+    @Override
+    public void fragmentBecameVisible() {
+        aDisasters.clear();
+        List<Disaster> orderedDisasters = Disaster.getOrderedDisasters( countries );
+        addAll( new ArrayList<Disaster>(orderedDisasters) );
+    }
 }

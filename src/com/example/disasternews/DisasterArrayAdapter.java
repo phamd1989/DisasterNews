@@ -159,14 +159,32 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
         });
         
         // Set the favorites button
-        ImageButton ib = (ImageButton) v.findViewById(R.id.tvStreamDisasterFavoriteButton);
+        final ImageButton ib = (ImageButton) v.findViewById(R.id.tvStreamDisasterFavoriteButton);
+        boolean favorite = disaster.getFavorite();
+        if ( favorite )
+            ib.setImageResource(R.drawable.ic_favorite_good_yellow);
+        else {
+            ib.setImageResource(R.drawable.ic_favorite_good_black);
+        }
         ib.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick(View v) {
-                disaster.setFavorite( !disaster.getFavorite() );
+                boolean favoriteChanged = !disaster.getFavorite();
+                disaster.setFavorite( favoriteChanged );
                 disaster.save();
+                if ( favoriteChanged ) {
+                    ib.setImageResource( R.drawable.ic_favorite_good_yellow );
+                }
+                else {
+                    ib.setImageResource( R.drawable.ic_favorite_good_black );
+                }
+                
             }
         });
+        
+        // Set the retweet button
+        final ImageButton rb = (ImageButton) v.findViewById(R.id.tvStreamDisasterRetweetButton);
+        rb.setImageResource(R.drawable.ic_retweet);
         
         return v;
     }

@@ -3,6 +3,7 @@
  */
 package com.example.disasternews;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -65,6 +66,42 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
     
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        /*
+        this.sort( new Comparator<Disaster>() {
+            @Override
+            public int compare(Disaster lhs, Disaster rhs) {
+                Long lTime = lhs.getEpochTime();
+                Long rTime = rhs.getEpochTime();
+                
+                if ( lTime == null && rTime == null ) {
+                    //System.out.println( "both null" );
+                    return 0;
+                }
+                if ( lTime == null ) {
+                    //System.out.println( "lTime null" );
+                    return 1;
+                }
+                if ( rTime == null ) {
+                    //System.out.println( "rTime null" );
+                    return -1;
+                }
+
+                if ( lTime < rTime ) {
+                    //System.out.println( "lTime less than rTime: " + lTime + " rTime: " + rTime );
+                    return 1;
+                }
+                if ( lTime > rTime ) {
+                    //System.out.println( "lTime greater than rTime: " + lTime + " rTime: " + rTime );
+                    return -1;
+                }
+                
+                //System.out.println( "lTime equal than rTime: " + lTime + " rTime: " + rTime );
+                return 0;
+            }
+        });
+        */
+        
+        
         // Get the data item for position
         final Disaster disaster = getItem(position);
         
@@ -90,7 +127,8 @@ public class DisasterArrayAdapter extends ArrayAdapter<Disaster> {
         tvDescription.setText( disaster.getName() );
         
         //tvDate.setText( disaster.getDate() );
-        tvDate.setText( disaster.getRelativeTime());
+        // tvDate.setText( disaster.getRelativeTime() + " epoch: " + disaster.getEpochTime() );
+        tvDate.setText( disaster.getRelativeTime() );
         
         // Find the views within template
         ImageView ivDisasterIcon = (ImageView) v.findViewById(R.id.ivDisasterIcon);

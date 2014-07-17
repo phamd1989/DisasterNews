@@ -135,19 +135,46 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
                                                     if ( fieldMapSecond.has("body") ) {
                                                         body = fieldMapSecond.getString("body");
                                                     }
-                                                    
                                                     Disaster disaster = new Disaster( id,
-                                                                                      fieldMapSecond.getString("url"),
-                                                                                      originalNameArray[0],
-                                                                                      body,
-                                                                                      dateObject.getString("created"),
-                                                                                      countryMap.getString("name"),
-                                                                                      disasterTypeMap.getString("name"),
-                                                                                      previewMap.getString("url-large"),
-                                                                                      fieldMapSecond.getString("title")
+                                                            fieldMapSecond.getString("url"),
+                                                            originalNameArray[0],
+                                                            body,
+                                                            dateObject.getString("created"),
+                                                            countryMap.getString("name"),
+                                                            disasterTypeMap.getString("name"),
+                                                            previewMap.getString("url-large"),
+                                                            fieldMapSecond.getString("title")
                                                             );
                                                     disaster.save();
                                                     aDisasters.add(disaster);
+                                                    
+                                                    /*
+                                                    for ( int i=0; i < countryArray.length(); i++ ) {
+                                                        JSONObject tempCountryMap = (JSONObject) countryArray.get(i);
+                                                        String countryName = tempCountryMap.getString("name");
+                                                        
+                                                        if ( countries.contains(countryName) ) {
+                                                            Log.d("DEBUG", "adding: " + countryName );
+                                                            
+                                                            Disaster disaster = new Disaster( id,
+                                                                    fieldMapSecond.getString("url"),
+                                                                    originalNameArray[0],
+                                                                    body,
+                                                                    dateObject.getString("created"),
+                                                                    countryName,
+                                                                    disasterTypeMap.getString("name"),
+                                                                    previewMap.getString("url-large"),
+                                                                    fieldMapSecond.getString("title")
+                                                                    );
+                                                            disaster.save();
+                                                        }
+                                                    }
+                                                    */
+                                                                     
+                                                    aDisasters.clear();
+                                                    List<Disaster> orderedDisasters = Disaster.getOrderedDisasters( countries );
+                                                    Log.d("DEBUG", "orderedDisasters size: " + orderedDisasters.size() );
+                                                    addAll( new ArrayList<Disaster>(orderedDisasters) );
                                                 }
                                                 
                                             }
@@ -203,36 +230,9 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
                 Log.d("ERROR", e.toString() );
                 Log.d("ERROR", s);
             }
-            
         });
         
-        aDisasters.sort( new Comparator<Disaster>() {
-
-            @Override
-            public int compare(Disaster lhs, Disaster rhs) {
-                Long lTime = lhs.getEpochTime();
-                Long rTime = rhs.getEpochTime();
-                
-                if ( lTime == null && rTime == null ) {
-                    return 0;
-                }
-                if ( lTime == null ) {
-                    return 1;
-                }
-                if ( rTime == null ) {
-                    return -1;
-                }
-
-                if ( lTime < rTime ) {
-                    return 1;
-                }
-                if ( lTime > rTime ) {
-                    return -1;
-                }
-                
-                return 0;
-            }
-        });
+        
     }
 
     /**

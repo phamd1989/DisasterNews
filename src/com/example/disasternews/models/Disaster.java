@@ -2,6 +2,8 @@ package com.example.disasternews.models;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -193,6 +195,38 @@ public class Disaster extends Model {
         return result;
     }
     
+    /**
+     * Method to return results
+     * @param countries 
+     * @return
+     */
+    public static List<Disaster> getOrderedDisasters( List<String> countries) {
+        Log.d("DEBUG", "countries " + countries.toString() );
+        
+        List<Disaster> result = null;
+        
+        String countryQuery = "";
+        if ( countries.size() > 0 ) {
+            countryQuery = String.format("country = %s", countries.get(0));
+        }
+        
+        for ( int i=1; i<countries.size(); i++ ) {
+            countryQuery += String.format("OR country = '%s'", countries.get(i));
+        }
+        
+        Log.d( "DEBUG", "countryQuery: " + countryQuery );
+        
+        result = new Select()
+        .from(Disaster.class)
+        //.where( countryQuery )
+        .orderBy("epochTime")
+        .execute();
+        
+        Collections.reverse(result);
+        
+        return result;
+    }
+    
     public static Disaster getDisasterInfo(int dId) {
 		return (Disaster) new Select().from(Disaster.class).where("disasterId = ?", dId).executeSingle();
 	}
@@ -210,7 +244,7 @@ public class Disaster extends Model {
         sf.setLenient(true);
      
         String relativeDate = "";
-        try {
+        try {            
             long dateMillis = sf.parse(rawJsonDate).getTime();
             this.epochTime = dateMillis;
             

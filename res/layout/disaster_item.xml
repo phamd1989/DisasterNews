@@ -61,10 +61,20 @@
 
     <ImageButton
         android:id="@+id/tvStreamDisasterFavoriteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/tvStreamDisasterCountry"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignBottom="@+id/tvStreamDisasterDate"
+        android:layout_alignParentRight="true"
+        android:background="@null"
         android:src="@android:drawable/btn_star" />
+
+    <ImageButton
+        android:id="@+id/tvStreamDisasterRetweetButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignLeft="@+id/tvStreamDisasterCountry"
+        android:layout_alignBottom="@+id/tvStreamDisasterFavoriteButton"
+        android:background="@null"
+        android:src="@drawable/ic_action_next" />
 
 </RelativeLayout>

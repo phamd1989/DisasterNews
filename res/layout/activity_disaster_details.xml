@@ -12,7 +12,7 @@
        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/btnWebView" >
+        android:layout_below="@+id/ivMenu" >
   	</FrameLayout>
 
 	<ImageView
@@ -28,17 +28,6 @@
     	android:adjustViewBounds="true"
 	    android:src="@drawable/sign_in_with_twitter" />
 
-	<!-- <Button
-	    android:id="@+id/btnWebView"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/tvTitle"
-	    android:layout_centerHorizontal="true"
-	    android:layout_marginTop="5dp"
-	    android:text="View on the web" />
-	 -->
-	
-	
 	<TextView
 	    android:id="@+id/tvTimestamp"
 	    android:layout_alignParentLeft="true"
@@ -67,7 +56,49 @@
 	    android:layout_below="@+id/tvTitle"
 	    android:layout_centerHorizontal="true"
 	    android:layout_alignParentLeft="true"
+	    android:padding="1dp"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:background="@drawable/border_image"
         android:layout_alignParentRight="true"
-	    android:src="@drawable/ic_launcher" />
+	    android:src="@drawable/ic_blank" />
+
+	<ImageButton
+	    android:id="@+id/ibTweet"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignBottom="@+id/ivMenu"
+	    android:layout_below="@+id/tvTitle"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    android:layout_marginLeft="10dp"
+	    android:background="#ffffff"
+	    android:src="@drawable/ic_retweet" />
+
+	<ImageButton
+	    android:id="@+id/ibFavorite"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/ivMenu"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    android:layout_centerHorizontal="true"
+	    android:layout_alignTop="@+id/ibTweet"
+	    android:background="#ffffff"
+	    android:src="@drawable/ic_favorite_good_black" />
+
+	<ImageButton
+	    android:id="@+id/ibViewOnWeb"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignBottom="@+id/ivMenu"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    android:layout_alignTop="@+id/ibFavorite"
+	    android:layout_marginRight="10dp"
+	    android:background="#ffffff"
+	    android:src="@drawable/ic_view_on_web" />
 
 </RelativeLayout>

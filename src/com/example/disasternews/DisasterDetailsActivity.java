@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,9 +24,10 @@ public class DisasterDetailsActivity extends FragmentActivity {
     private int dId;
     
     private ImageView ivMap;
-    private Button btnWebView;
+    private ImageButton ibWebView;
     private TextView tvTimestamp;
     private TextView tvTitle;
+    private ImageButton ibFavorite;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,10 @@ public class DisasterDetailsActivity extends FragmentActivity {
 
     private void loadDisasterDetails(int disasterId) {
 		ivMap = (ImageView) findViewById(R.id.ivMap);
-//		btnWebView = (Button) findViewById(R.id.btnWebView);
+		ibWebView = (ImageButton) findViewById(R.id.ibViewOnWeb);
 		tvTimestamp = (TextView) findViewById(R.id.tvTimestamp);
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
+		ibFavorite = (ImageButton) findViewById(R.id.ibFavorite);
     	
     	final Disaster disaster = Disaster.getDisasterInfo(disasterId);
     	ivMap.setImageResource(android.R.color.transparent);
@@ -65,14 +67,36 @@ public class DisasterDetailsActivity extends FragmentActivity {
 		imageLoader.displayImage(disaster.getImageUrl(), ivMap);
 		tvTimestamp.setText(disaster.getRelativeTime());
 		tvTitle.setText(disaster.getName());
-//		btnWebView.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(disaster.getUrl()));
-//		        startActivity(i);
-//			}
-//		});
+		ibWebView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(disaster.getUrl()));
+		        startActivity(i);
+			}
+		});
+		
+		// handling click on Favorite button here
+		boolean favorite = disaster.getFavorite();
+        if ( favorite )
+        	ibFavorite.setImageResource(R.drawable.ic_favorite_good_yellow);
+        else {
+        	ibFavorite.setImageResource(R.drawable.ic_favorite_good_black);
+        }
+        ibFavorite.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean favoriteChanged = !disaster.getFavorite();
+                disaster.setFavorite( favoriteChanged );
+                disaster.save();
+                if ( favoriteChanged ) {
+                	ibFavorite.setImageResource( R.drawable.ic_favorite_good_yellow );
+                }
+                else {
+                	ibFavorite.setImageResource( R.drawable.ic_favorite_good_black );
+                }
+            }
+        });
 	}
 
 

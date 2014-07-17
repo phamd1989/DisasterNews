@@ -5,13 +5,6 @@ package com.example.disasternews.fragment;
 
 import java.util.ArrayList;
 
-import com.example.disasternews.DisasterArrayAdapter;
-import com.example.disasternews.DisasterDetailsActivity;
-import com.example.disasternews.EndlessScrollListener;
-import com.example.disasternews.R;
-import com.example.disasternews.ReliefWebClient;
-import com.example.disasternews.models.Disaster;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,10 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.example.disasternews.DisasterArrayAdapter;
+import com.example.disasternews.DisasterDetailsActivity;
+import com.example.disasternews.DisasterNewsClient;
+import com.example.disasternews.DiasterNewsApplication;
+import com.example.disasternews.EndlessScrollListener;
+import com.example.disasternews.R;
+import com.example.disasternews.ReliefWebClient;
+import com.example.disasternews.models.Disaster;
 
 /**
  *
@@ -34,6 +35,7 @@ public abstract class BaseTimelineFragment extends Fragment {
     protected ListView lvDisasters;
     protected DisasterEndlessScrollListener disasterEndlessScrollListener;
     protected ReliefWebClient client = null;
+    protected DisasterNewsClient twitterClient = null;
     
     public static BaseTimelineFragment btf = null;
     protected ArrayList<String> countries;
@@ -179,6 +181,7 @@ public abstract class BaseTimelineFragment extends Fragment {
         aDisasters = new DisasterArrayAdapter(getActivity(), disasters);
         
         client = ReliefWebClient.getInstance();
+        twitterClient = DiasterNewsApplication.getRestClient();
     }
     
 

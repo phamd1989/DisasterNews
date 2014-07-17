@@ -12,6 +12,8 @@
         android:id="@+id/ivDisasterIcon"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_alignParentLeft="true"
@@ -20,20 +22,23 @@
 
     <TextView
         android:id="@+id/tvStreamDisasterType"
+        android:layout_alignTop="@+id/ivDisasterIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_alignParentTop="true"
+        android:textSize="18sp"
+        android:textColor="#575757"
         android:layout_toRightOf="@+id/ivDisasterIcon"
         android:text="@string/stream_disaster_type" />
 
     <TextView
         android:id="@+id/tvStreamDisasterCountry"
+        android:layout_alignTop="@+id/ivDisasterIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:textSize="15sp"
+        android:layout_marginRight="5dp"
+        android:textColor="#575757"
+        android:textSize="18sp"
         android:maxLines="1"
         android:maxLength="15"
         android:text="@string/stream_disaster_country" />
@@ -43,9 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvStreamDisasterType"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/tvStreamDisasterType"
-        android:textSize="15sp"
+        android:textColor="#575757"
+        android:textSize="16sp"
         android:maxLines="1"
         android:maxLength="30"
         android:text="@string/stream_disaster_name" />
@@ -54,7 +59,8 @@
         android:id="@+id/tvStreamDisasterDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="14sp"
+        android:textColor="#575757"
         android:layout_alignLeft="@+id/tvStreamDisasterType"
         android:layout_below="@+id/tvStreamDisasterName"
         android:text="@string/stream_disaster_date" />
@@ -63,8 +69,11 @@
         android:id="@+id/tvStreamDisasterFavoriteButton"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_alignBottom="@+id/tvStreamDisasterDate"
-        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignTop="@+id/tvStreamDisasterDate"
+        android:layout_alignRight="@+id/tvStreamDisasterCountry"
+        android:layout_marginRight="80dp"
         android:background="@null"
         android:src="@android:drawable/btn_star" />
 
@@ -72,10 +81,12 @@
         android:id="@+id/tvStreamDisasterRetweetButton"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_alignBottom="@+id/tvStreamDisasterFavoriteButton"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignTop="@+id/tvStreamDisasterDate"
+        android:layout_alignLeft="@+id/tvStreamDisasterType"
+        android:layout_marginLeft="80dp"
         android:background="@null"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
         android:src="@drawable/ic_action_next" />
 
 </RelativeLayout>

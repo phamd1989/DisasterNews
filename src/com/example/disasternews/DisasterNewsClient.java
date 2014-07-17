@@ -19,6 +19,8 @@ public class DisasterNewsClient extends OAuthBaseClient{
     public static final String REST_CONSUMER_SECRET = "NSdPuVFH4e7zJRoKcnqrUIb0KOdIAzu4bSeSEPv4VArktnRxEi"; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://cpbasictweets"; // Change this (here and in manifest)
 	
+	String tweet = "";
+	
 	public DisasterNewsClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
@@ -41,8 +43,21 @@ public class DisasterNewsClient extends OAuthBaseClient{
 //			params = null;
 //		}
 		params.put("q", searchQuery);
-		Log.d("debug", params.toString());
+		Log.d("debug", "inside client: " + params.toString());
 		client.get(apiUrl, params, handler);
+	}
+	
+	public void postTweet(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		params.put("status", tweet);
+		Log.d("debug", tweet);
+		client.post(apiUrl, params, handler);
+	}
+	
+	public void setTweetBody(String tweetBody) {
+		tweet = tweetBody;
+		Log.d("debug", "inside setTweetBody" + tweet);
 	}
 	
 }

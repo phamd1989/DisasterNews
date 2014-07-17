@@ -46,7 +46,8 @@
         </activity>
         <activity
             android:name="com.example.disasternews.DisasterTimelineActivity"
-            android:label="@string/title_activity_disaster_timeline" >
+            android:label="@string/title_activity_disaster_timeline"
+            android:theme="@style/Theme.HighlightCopy" >
         </activity>
         <activity
             android:name="com.example.disasternews.SettingCountriesActivity"
@@ -60,7 +61,12 @@
         </activity>
         <activity
             android:name="com.example.disasternews.DisasterDetailsActivity"
-            android:label="@string/title_activity_disaster_details" >
+            android:label="@string/title_activity_disaster_details"
+            android:theme="@style/Theme.HighlightCopy" >
+        </activity>
+        <activity
+            android:name="com.example.disasternews.ComposeTweetActivity"
+            android:label="@string/title_activity_compose_tweet" >
         </activity>
     </application>
 

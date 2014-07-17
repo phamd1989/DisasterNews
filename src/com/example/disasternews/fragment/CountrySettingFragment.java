@@ -26,17 +26,47 @@ public class CountrySettingFragment extends BaseSettingFragment{
 		countries.add(new Country("Argentina", false));
 		countries.add(new Country("Armenia", false));
 		countries.add(new Country("Aruba", false));
-//		countries.add("Australia");
-//		countries.add("Austria");
-//		countries.add("Azerbaijan");
-//		countries.add("Azores Islands");
-//		countries.add("Bahamas");
-//		countries.add("Bahrain");
-//		countries.add("Bangladesh");
-//		countries.add("Barbados");
-//		countries.add("Belarus");
-//		countries.add("Belgium");
-//		countries.add("Belize");
+		countries.add(new Country("Australia", false));
+		countries.add(new Country("Austria", false));
+		countries.add(new Country("Azerbaijan", false));
+		countries.add(new Country("Azores Islands", false));
+		countries.add(new Country("Bahamas", false));
+		countries.add(new Country("Bahrain", false));
+		countries.add(new Country("Bangladesh", false));
+		countries.add(new Country("Barbados", false));
+		countries.add(new Country("Belarus", false));
+		countries.add(new Country("Belgium", false));
+		countries.add(new Country("Belize", false));
+		countries.add(new Country("Benin", false));
+		countries.add(new Country("Bermuda", false));
+		countries.add(new Country("Bhutan", false));
+		countries.add(new Country("Bolivia", false));
+		
+		countries.add(new Country("Brazil", false));
+		countries.add(new Country("Cambodia", false));
+		countries.add(new Country("Chile", false));
+		countries.add(new Country("China", false));
+		countries.add(new Country("Costa Rica", false));
+		countries.add(new Country("Denmark", false));
+		countries.add(new Country("Germany", false));
+		countries.add(new Country("Haiti", false));
+		countries.add(new Country("India", false));
+		countries.add(new Country("Indonesia", false));
+		countries.add(new Country("Belize", false));
+		
+		countries.add(new Country("Russian Federation", false));
+//		countries.add(new Country("Belize", false));
+//		countries.add(new Country("Belize", false));
+//		countries.add(new Country("Belize", false));
+//		countries.add(new Country("Belize", false));countries.add(new Country("Belize", false));
+//		
+//		countries.add(new Country("Belize", false));
+//		countries.add(new Country("Belize", false));
+//		countries.add(new Country("Belize", false));
+//		countries.add(new Country("Belize", false));
+//		countries.add(new Country("Belize", false));
+//		
+//		countries.add(new Country("Belize", false));
 //		countries.add("Benin");
 //		countries.add("Bermuda");
 //		countries.add("Bhutan");

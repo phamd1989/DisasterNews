@@ -8,6 +8,8 @@
         android:id="@+id/lvDisasters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="#89CFF0"
+        android:dividerHeight="1dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"

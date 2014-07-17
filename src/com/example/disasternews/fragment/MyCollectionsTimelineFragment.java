@@ -44,7 +44,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+        Toast.makeText(getActivity(), "Creating MyCollection view", Toast.LENGTH_LONG).show();
         populateTimeline( false );
     }
     
@@ -117,6 +117,7 @@ public class MyCollectionsTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void fragmentBecameVisible() {
+    	Toast.makeText(getActivity(), "calling fragmentBecameVisible inside MyCollection", Toast.LENGTH_LONG).show();
         populateTimeline( false );
     }
     

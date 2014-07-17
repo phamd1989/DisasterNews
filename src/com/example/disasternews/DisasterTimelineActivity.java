@@ -1,28 +1,30 @@
 package com.example.disasternews;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.util.AttributeSet;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.LayoutInflater.Factory;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.disasternews.fragment.BaseTimelineFragment;
 import com.example.disasternews.fragment.DisasterTimelineFragment;
 import com.example.disasternews.fragment.MyCollectionsTimelineFragment;
-import com.example.disasternews.fragment.BaseTimelineFragment.BecameVisible;
-import com.example.disasternews.models.Disaster;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.example.disasternews.R;
+
 
 public class DisasterTimelineActivity extends FragmentActivity {
 
@@ -75,7 +77,22 @@ public class DisasterTimelineActivity extends FragmentActivity {
         });
 	}
 	
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.setting, menu);
+        return true;
+    }
+	
 
+
+	public void onSetting(MenuItem mi) {
+		Intent i = new Intent(DisasterTimelineActivity.this, SettingCountriesActivity.class);
+		startActivity(i);
+	}
+	
+	
     /**
      * 
      */

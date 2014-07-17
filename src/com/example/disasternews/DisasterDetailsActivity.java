@@ -1,5 +1,7 @@
 package com.example.disasternews;
 
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.disasternews.fragment.RelatedTweetsFragment;
 import com.example.disasternews.models.Disaster;
+import com.example.disasternews.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class DisasterDetailsActivity extends FragmentActivity {
@@ -28,12 +32,18 @@ public class DisasterDetailsActivity extends FragmentActivity {
     private TextView tvTimestamp;
     private TextView tvTitle;
     private ImageButton ibFavorite;
+    private ImageButton ibTweet;
+    
+    
+    DisasterNewsClient client;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
         setContentView(R.layout.activity_disaster_details);
+        
+        client = DiasterNewsApplication.getRestClient();
         
         // loading progress
         showProgressBar();
@@ -60,6 +70,7 @@ public class DisasterDetailsActivity extends FragmentActivity {
 		tvTimestamp = (TextView) findViewById(R.id.tvTimestamp);
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 		ibFavorite = (ImageButton) findViewById(R.id.ibFavorite);
+		ibTweet = (ImageButton) findViewById(R.id.ibTweet);
     	
     	final Disaster disaster = Disaster.getDisasterInfo(disasterId);
     	ivMap.setImageResource(android.R.color.transparent);
@@ -97,9 +108,28 @@ public class DisasterDetailsActivity extends FragmentActivity {
                 }
             }
         });
+        
+        ibTweet.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(DisasterDetailsActivity.this, ComposeTweetActivity.class);
+				i.putExtra("title", tvTitle.getText().toString());
+				startActivityForResult(i, REQUEST_CODE);
+			}
+		});
 	}
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	if (requestCode == RESULT_OK && requestCode == REQUEST_CODE) {
+    		String tweet = data.getExtras().getString("tweet");
+    		Log.d("debug", "tweet in onActivityResult: " + tweet);
+    		client.setTweetBody(tweet);
+    		postTweetUpdate();
+    	}
+    }
+    
 	protected void loadTweetsRelated() {
         Toast.makeText(DisasterDetailsActivity.this, disasterName, Toast.LENGTH_SHORT).show();
         Log.d("debug", "Search for: " + disasterName);
@@ -109,5 +139,20 @@ public class DisasterDetailsActivity extends FragmentActivity {
         ft.replace(R.id.flRelatedTweets, fragmentRelatedTweets);
         ft.commit();
     }
+	
+	private void postTweetUpdate() {
+		client.postTweet(new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(JSONObject jsonObj) {
+				Toast.makeText(DisasterDetailsActivity.this, "Tweet posted", Toast.LENGTH_LONG).show();
+			}
+			
+			@Override
+			public void onFailure(Throwable e, String s) {
+				Log.d("debug", e.toString());
+				Log.d("debug", s.toString());
+			}
+		});
+	}
     
 }

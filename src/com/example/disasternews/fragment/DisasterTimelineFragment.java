@@ -46,8 +46,16 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         populateTimeline( true );
+        
+//        if ( Disaster.getOrderedDisasters( countries ).size() == 0) {
+//        	Toast.makeText(getActivity(), "Calling the API", Toast.LENGTH_LONG).show();
+//        	populateTimeline( true );
+//        } else {
+//        	Log.d("Debug", "Loading from database inside DisasterTimelineFragment");
+//        	Toast.makeText(getActivity(), "Loading from database", Toast.LENGTH_LONG).show();
+//        	fragmentBecameVisible();
+//        }
     }
     
     
@@ -252,7 +260,8 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void onLoadMore(int totalItemsCount) {
-        populateTimeline( false );
+    	//fragmentBecameVisible();
+    	populateTimeline( false );
     }
     
     
@@ -262,8 +271,11 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void fragmentBecameVisible() {
+    	Toast.makeText(getActivity(), "calling fragmentBecameVisible inside DisasterTimeline", Toast.LENGTH_LONG).show();
         aDisasters.clear();
         List<Disaster> orderedDisasters = Disaster.getOrderedDisasters( countries );
         addAll( new ArrayList<Disaster>(orderedDisasters) );
+        Log.d("Debug", aDisasters.toString());
+        aDisasters.notifyDataSetChanged();
     }
 }

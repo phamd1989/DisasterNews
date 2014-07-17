@@ -43,9 +43,10 @@ public class BaseSettingFragment extends Fragment{
 				TextView tv = (TextView) view.findViewById(R.id.tvSetting);
 				
 				if (position == 0) {
+					// click on Select All button
 					settingsSelected.clear();
 					if (cb.isChecked()) {
-						// uncheck
+						// uncheck the Check All button
 						cb.setChecked(false);
 						int size = lvCountries.getAdapter().getCount();
 						for (int i=1; i<size; i++) {
@@ -55,8 +56,7 @@ public class BaseSettingFragment extends Fragment{
 						}
 					} else {
 						cb.setChecked(true);
-						// check all countries here
-						
+						// select all countries here
 						int size = lvCountries.getAdapter().getCount();
 						for (int i=1; i<size; i++) {
 							settingsSelected.add(lvCountries.getAdapter().getItem(i).toString());

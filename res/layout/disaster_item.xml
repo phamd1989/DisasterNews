@@ -72,9 +72,10 @@
         android:id="@+id/tvStreamDisasterRetweetButton"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_alignLeft="@+id/tvStreamDisasterCountry"
         android:layout_alignBottom="@+id/tvStreamDisasterFavoriteButton"
         android:background="@null"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
         android:src="@drawable/ic_action_next" />
 
 </RelativeLayout>

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.disasternews.R;
 import com.example.disasternews.SettingsArrayAdapter;
+import com.example.disasternews.models.Country;
 
 public class BaseSettingFragment extends Fragment{
 	protected SettingsArrayAdapter adapter;
@@ -47,24 +48,33 @@ public class BaseSettingFragment extends Fragment{
 					settingsSelected.clear();
 					if (cb.isChecked()) {
 						// uncheck the Check All button
-						cb.setChecked(false);
+//						cb.setChecked(false);
 						int size = lvCountries.getAdapter().getCount();
-						for (int i=1; i<size; i++) {
-							View v = lvCountries.getChildAt(i);
-							CheckBox cbi = (CheckBox) v.findViewById(R.id.cbSetting);
-							cbi.setChecked(false);
+						for (int i=0; i<size; i++) {
+//							View v = lvCountries.getChildAt(i);
+//							CheckBox cbi = (CheckBox) v.findViewById(R.id.cbSetting);
+//							cbi.setChecked(false);
+							
+							Country c = adapter.getItem(i);
+							c.setChecked(false);
 						}
 					} else {
-						cb.setChecked(true);
+						//cb.setChecked(true);
 						// select all countries here
 						int size = lvCountries.getAdapter().getCount();
-						for (int i=1; i<size; i++) {
-							settingsSelected.add(lvCountries.getAdapter().getItem(i).toString());
-							View v = lvCountries.getChildAt(i);
-							CheckBox cbi = (CheckBox) v.findViewById(R.id.cbSetting);
-							cbi.setChecked(true);
+						for (int i=0; i<size; i++) {
+//							settingsSelected.add(lvCountries.getAdapter().getItem(i).toString());
+//							View v = lvCountries.getChildAt(i);
+//							CheckBox cbi = (CheckBox) v.findViewById(R.id.cbSetting);
+//							cbi.setChecked(true);
+							if (i != 0) {
+								settingsSelected.add(adapter.getItem(i).getCountryName());
+							}
+							Country c = adapter.getItem(i);
+							c.setChecked(true);
 						}
 					}
+					adapter.notifyDataSetChanged();
 				} else {
 					// check some countries here
 					if (cb.isChecked()) {

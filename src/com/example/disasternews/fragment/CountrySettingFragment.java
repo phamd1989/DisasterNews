@@ -4,26 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+
 import com.example.disasternews.SettingsArrayAdapter;
+import com.example.disasternews.models.Country;
 
 public class CountrySettingFragment extends BaseSettingFragment{
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		List<String> countries = new ArrayList<>();
-		countries.add("Select All");
-		countries.add("Afghanistan");
-		countries.add("Aland Islands");
-		countries.add("Albania");
-		countries.add("Algeria");
-		countries.add("American Samoa");
-		countries.add("Andorra");
-		countries.add("Anguilla");
-		countries.add("Antigua and Barbuda");
-//		countries.add("Argentina");
-//		countries.add("Armenia");
-//		countries.add("Aruba");
+		List<Country> countries = new ArrayList<>();
+		countries.add(new Country("Select All", false));
+		countries.add(new Country("Afghanistan", false));
+		countries.add(new Country("Aland Islands", false));
+		countries.add(new Country("Albania", false));
+		countries.add(new Country("Algeria", false));
+		countries.add(new Country("American Samoa", false));
+		countries.add(new Country("Andorra", false));
+		countries.add(new Country("Anguilla", false));
+		countries.add(new Country("Antigua and Barbuda", false));
+		countries.add(new Country("Argentina", false));
+		countries.add(new Country("Armenia", false));
+		countries.add(new Country("Aruba", false));
 //		countries.add("Australia");
 //		countries.add("Austria");
 //		countries.add("Azerbaijan");
@@ -64,7 +66,7 @@ public class CountrySettingFragment extends BaseSettingFragment{
 //		countries.add("Congo");
 //		countries.add("Cook Islands");
 //		countries.add("Costa Rica");
-//		countries.add("Côte d'Ivoire");
+//		countries.add("C��te d'Ivoire");
 //		countries.add("Croatia");
 //		countries.add("Cuba");
 //		countries.add("Cyprus");
@@ -189,7 +191,7 @@ public class CountrySettingFragment extends BaseSettingFragment{
 //		countries.add("Puerto Rico");
 //		countries.add("Qatar");
 //		countries.add("Republic of Korea");
-//		countries.add("Réunion");
+//		countries.add("R��union");
 //		countries.add("Romania");
 //		countries.add("Russian Federation");
 //		countries.add("Rwanda");

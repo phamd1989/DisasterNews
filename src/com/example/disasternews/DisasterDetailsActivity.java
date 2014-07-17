@@ -55,7 +55,7 @@ public class DisasterDetailsActivity extends FragmentActivity {
 
     private void loadDisasterDetails(int disasterId) {
 		ivMap = (ImageView) findViewById(R.id.ivMap);
-		btnWebView = (Button) findViewById(R.id.btnWebView);
+//		btnWebView = (Button) findViewById(R.id.btnWebView);
 		tvTimestamp = (TextView) findViewById(R.id.tvTimestamp);
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
     	
@@ -65,14 +65,14 @@ public class DisasterDetailsActivity extends FragmentActivity {
 		imageLoader.displayImage(disaster.getImageUrl(), ivMap);
 		tvTimestamp.setText(disaster.getRelativeTime());
 		tvTitle.setText(disaster.getName());
-		btnWebView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(disaster.getUrl()));
-		        startActivity(i);
-			}
-		});
+//		btnWebView.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(disaster.getUrl()));
+//		        startActivity(i);
+//			}
+//		});
 	}
 
 

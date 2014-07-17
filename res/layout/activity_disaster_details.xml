@@ -28,7 +28,7 @@
     	android:adjustViewBounds="true"
 	    android:src="@drawable/sign_in_with_twitter" />
 
-	<Button
+	<!-- <Button
 	    android:id="@+id/btnWebView"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -36,7 +36,9 @@
 	    android:layout_centerHorizontal="true"
 	    android:layout_marginTop="5dp"
 	    android:text="View on the web" />
-
+	 -->
+	
+	
 	<TextView
 	    android:id="@+id/tvTimestamp"
 	    android:layout_alignParentLeft="true"
@@ -57,5 +59,15 @@
 	    android:layout_marginTop="2dp"
 	    android:text="Large Text"
 	    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<ImageView
+	    android:id="@+id/ivMenu"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/tvTitle"
+	    android:layout_centerHorizontal="true"
+	    android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+	    android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>

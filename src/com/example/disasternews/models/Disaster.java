@@ -22,7 +22,7 @@ public class Disaster extends Model {
     public static final String DISASTER_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     
-    @Column(name = "disasterId")
+    @Column(name = "disasterId", unique = true )
     public int disasterId;
     @Column(name = "url")
     public String url;

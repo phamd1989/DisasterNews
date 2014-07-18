@@ -2,26 +2,16 @@ package com.example.disasternews;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
-import android.view.InflateException;
-import android.view.LayoutInflater;
-import android.view.LayoutInflater.Factory;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
-import com.example.disasternews.fragment.BaseTimelineFragment;
 import com.example.disasternews.fragment.DisasterTimelineFragment;
 import com.example.disasternews.fragment.MyCollectionsTimelineFragment;
 
@@ -59,11 +49,15 @@ public class DisasterTimelineActivity extends FragmentActivity {
         vpPager.setOnPageChangeListener( new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int page) {
-                BaseTimelineFragment fragment = (BaseTimelineFragment) adapter.instantiateItem(vpPager, page);
-                if ( fragment != null && fragment instanceof MyCollectionsTimelineFragment ) {
-                    MyCollectionsTimelineFragment my = (MyCollectionsTimelineFragment) fragment;
-                    my.fragmentBecameVisible();
-                }
+            	
+            	Fragment fragment = adapter.getItem(page);
+            	if (fragment != null && fragment instanceof MyCollectionsTimelineFragment) {
+            		MyCollectionsTimelineFragment my = (MyCollectionsTimelineFragment) fragment;
+            		my.onRefreshFragment();
+            	} else if (fragment != null && fragment instanceof DisasterTimelineFragment) {
+            		DisasterTimelineFragment dtf = (DisasterTimelineFragment) fragment;
+            		dtf.onRefreshFragment();
+            	}
             }
             
             @Override
@@ -73,6 +67,7 @@ public class DisasterTimelineActivity extends FragmentActivity {
             
             @Override
             public void onPageScrollStateChanged(int arg0) {
+
             }
         });
 	}
@@ -92,33 +87,7 @@ public class DisasterTimelineActivity extends FragmentActivity {
 		startActivity(i);
 	}
 	
-	
-    /**
-     * 
-     */
-	/*
-    private void setupTabs() {
-        // get action bar
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-        // tell action bar we want tabs
-        actionBar.setDisplayShowTitleEnabled(true);
-
-        Tab tab1 = actionBar
-            .newTab()
-            .setText("Home")
-            .setIcon(R.drawable.ic_launcher)
-            .setTag("DisasterTimelineFragment")
-            .setTabListener(
-                new FragmentTabListener<DisasterTimelineFragment>(R.id.flContainer, this, DISASTER_TAB_TAG,
-                        DisasterTimelineFragment.class));
-
-        actionBar.addTab(tab1);
-        actionBar.selectTab(tab1);
-    }
-    */
-    
+	    
 	public class ContentPagerAdapter extends FragmentPagerAdapter {
 
         public ContentPagerAdapter(FragmentManager fm) {

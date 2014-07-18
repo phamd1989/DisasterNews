@@ -188,6 +188,7 @@ public class Disaster extends Model {
         List<Disaster> result = new Select()
         .from(Disaster.class)
         .where("favorite = 1")
+        .orderBy("epochTime")
         .execute();
         
         Log.d("DEBUG", "Size of favorites: " + result.size());

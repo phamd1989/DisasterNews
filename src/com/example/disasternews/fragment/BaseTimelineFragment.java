@@ -35,25 +35,35 @@ public abstract class BaseTimelineFragment extends Fragment {
     protected ListView lvDisasters;
     protected DisasterEndlessScrollListener disasterEndlessScrollListener;
     protected ReliefWebClient client = null;
-    protected DisasterNewsClient twitterClient = null;
     
     public static BaseTimelineFragment btf = null;
     protected ArrayList<String> countries;
     protected ArrayList<String> types;
     
     
-    /**
-     * 
-     */
-    public BaseTimelineFragment() {
+//    /**
+//     * 
+//     */
+//    public BaseTimelineFragment() {
+//    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        disasters = new ArrayList<Disaster>();
+        aDisasters = new DisasterArrayAdapter(getActivity(), disasters);
+        
+        client = ReliefWebClient.getInstance();
+//        twitterClient = DiasterNewsApplication.getRestClient();
     }
 
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        // return super.onCreateView(inflater, container, savedInstanceState);
         
-        View v = inflater.inflate(R.layout.fragment_disasters_list, container, false);
+    	View v = inflater.inflate(R.layout.fragment_disasters_list, container, false);
         
         // Assign our view references
         lvDisasters = (ListView) v.findViewById( R.id.lvDisasters );
@@ -88,9 +98,6 @@ public abstract class BaseTimelineFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                     int position, long id) {
-                // Toast.makeText(getActivity(), disasters.get(position).getName(), Toast.LENGTH_LONG).show();
-                
-                // Intent i = new Intent(getActivity(), DisasterDetailsActivity.class);
                 
                 Disaster disaster = disasters.get(position);
                 disaster.setFavorite(! disaster.getFavorite() );
@@ -101,6 +108,7 @@ public abstract class BaseTimelineFragment extends Fragment {
                 return false;
             }
         });
+        
         return v;
     }
     
@@ -129,7 +137,7 @@ public abstract class BaseTimelineFragment extends Fragment {
      * The activity shall set the pager listeners.
      */
     public interface BecameVisible {
-        public void fragmentBecameVisible();
+        public void onRefreshFragment();
     }
     
     /**
@@ -173,16 +181,6 @@ public abstract class BaseTimelineFragment extends Fragment {
     }
     
     
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        disasters = new ArrayList<Disaster>();
-        aDisasters = new DisasterArrayAdapter(getActivity(), disasters);
-        
-        client = ReliefWebClient.getInstance();
-        twitterClient = DiasterNewsApplication.getRestClient();
-    }
     
 
     

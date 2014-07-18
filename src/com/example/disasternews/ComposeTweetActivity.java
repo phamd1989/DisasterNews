@@ -23,7 +23,8 @@ public class ComposeTweetActivity extends Activity {
 		
 		etTweet        = (EditText) findViewById(R.id.etTweet);
 		btnTweet  	   = (Button) findViewById(R.id.btnTweet);
-		etTweet.setText(getIntent().getStringExtra("title"));
+		etTweet.setText(getIntent().getStringExtra("title")
+				+ getIntent().getStringExtra("url"));
 	}
 	
 	public void onTweet(View v) {

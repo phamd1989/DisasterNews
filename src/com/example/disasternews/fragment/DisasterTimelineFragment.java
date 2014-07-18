@@ -48,14 +48,14 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
         super.onCreate(savedInstanceState);
         populateTimeline( true );
         
-//        if ( Disaster.getOrderedDisasters( countries ).size() == 0) {
-//        	Toast.makeText(getActivity(), "Calling the API", Toast.LENGTH_LONG).show();
-//        	populateTimeline( true );
-//        } else {
-//        	Log.d("Debug", "Loading from database inside DisasterTimelineFragment");
-//        	Toast.makeText(getActivity(), "Loading from database", Toast.LENGTH_LONG).show();
-//        	fragmentBecameVisible();
-//        }
+        if ( Disaster.getOrderedDisasters( countries ).size() == 0) {
+        	Toast.makeText(getActivity(), "Calling the API", Toast.LENGTH_LONG).show();
+        	populateTimeline( true );
+        } else {
+        	Log.d("Debug", "Loading from database inside DisasterTimelineFragment");
+        	Toast.makeText(getActivity(), "Loading from database", Toast.LENGTH_LONG).show();
+        	onRefreshFragment();
+        }
     }
     
     
@@ -64,6 +64,8 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void populateTimeline( boolean newSettings ) {
+//    	Log.d("Debug", "inside populateTimeline making API calls");
+//    	Toast.makeText(getActivity(), "inside populateTimeline making API calls", Toast.LENGTH_LONG).show();
         client.getDisasters( newSettings, countries, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject json) {
@@ -145,17 +147,23 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
                                                     if ( fieldMapSecond.has("body") ) {
                                                         body = fieldMapSecond.getString("body");
                                                     }
-                                                    Disaster disaster = new Disaster( id,
-                                                            fieldMapSecond.getString("url"),
-                                                            originalNameArray[0],
-                                                            body,
-                                                            dateObject.getString("created"),
-                                                            countryMap.getString("name"),
-                                                            disasterTypeMap.getString("name"),
-                                                            previewMap.getString("url-large"),
-                                                            fieldMapSecond.getString("title")
-                                                            );
-                                                    disaster.save();
+                                                    
+                                                    Disaster disaster = null;
+                                                    if (Disaster.getDisasterInfo(id) != null) {
+                                                    	disaster = Disaster.getDisasterInfo(id);
+                                                    } else {
+                                                    	disaster = new Disaster( id,
+                                                                fieldMapSecond.getString("url"),
+                                                                originalNameArray[0],
+                                                                body,
+                                                                dateObject.getString("created"),
+                                                                countryMap.getString("name"),
+                                                                disasterTypeMap.getString("name"),
+                                                                previewMap.getString("url-large"),
+                                                                fieldMapSecond.getString("title")
+                                                                );
+                                                        disaster.save();
+                                                    }
                                                     aDisasters.add(disaster);
                                                     
                                                     /*
@@ -260,7 +268,6 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
      */
     @Override
     public void onLoadMore(int totalItemsCount) {
-    	//fragmentBecameVisible();
     	populateTimeline( false );
     }
     
@@ -270,12 +277,12 @@ public class DisasterTimelineFragment extends BaseTimelineFragment
      * Pager in DisasterTimelineActivity shall call this.
      */
     @Override
-    public void fragmentBecameVisible() {
-    	Toast.makeText(getActivity(), "calling fragmentBecameVisible inside DisasterTimeline", Toast.LENGTH_LONG).show();
+    public void onRefreshFragment() {
+//    	Toast.makeText(getActivity(), "calling fragmentBecameVisible inside DisasterTimeline", Toast.LENGTH_LONG).show();
         aDisasters.clear();
         List<Disaster> orderedDisasters = Disaster.getOrderedDisasters( countries );
         addAll( new ArrayList<Disaster>(orderedDisasters) );
-        Log.d("Debug", aDisasters.toString());
-        aDisasters.notifyDataSetChanged();
+//        Log.d("Debug", aDisasters.toString());
+//        aDisasters.notifyDataSetChanged();
     }
 }

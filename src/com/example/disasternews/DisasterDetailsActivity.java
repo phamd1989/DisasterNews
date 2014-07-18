@@ -115,6 +115,7 @@ public class DisasterDetailsActivity extends FragmentActivity {
 			public void onClick(View v) {
 				Intent i = new Intent(DisasterDetailsActivity.this, ComposeTweetActivity.class);
 				i.putExtra("title", tvTitle.getText().toString());
+				i.putExtra("url", disaster.getUrl());
 				startActivityForResult(i, REQUEST_CODE);
 			}
 		});
@@ -122,7 +123,7 @@ public class DisasterDetailsActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (requestCode == RESULT_OK && requestCode == REQUEST_CODE) {
+    	if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
     		String tweet = data.getExtras().getString("tweet");
     		Log.d("debug", "tweet in onActivityResult: " + tweet);
     		client.setTweetBody(tweet);
